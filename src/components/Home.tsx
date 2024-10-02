@@ -41,14 +41,14 @@ export function Home() {
   const [fileHash, setFileHash] = useState('');
   const [status, setStatus] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [notarizationSuccess, setNotarizationSuccess] = useState(false);
 
   const { isConnected } = useAccount();
   const chainId = useChainId();
   console.log('we are using chain id', chainId);
 
-  const contractAddress: `0x${string}` = contractAddresses[chainId]; // Assuming mainnet for this example
+  const contractAddress: `0x${string}` = contractAddresses[chainId];
   console.log('contract address', contractAddress);
-
 
   const { data: hashData, refetch: refetchHashData } = useReadContract({
     address: contractAddress,
@@ -60,7 +60,7 @@ export function Home() {
   const { writeContract, data: writeData } = useWriteContract();
 
   const { isLoading: isNotarizing, isSuccess: isNotarized } = useWaitForTransactionReceipt({
-    hash: writeData?.hash,
+    hash: writeData,
   });
 
   const handleFileChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,6 +84,7 @@ export function Home() {
         functionName: 'notarize',
         args: [`0x${fileHash}`],
       });
+      setNotarizationSuccess(false); // Reset success state when starting a new notarization
     }
   }, [fileHash, writeContract, contractAddress]);
 
@@ -96,13 +97,20 @@ export function Home() {
   useEffect(() => {
     if (hashData) {
       const [timestamp, blockNumber] = hashData;
-      if (parseInt(timestamp) > 0) {
+      if (parseInt(timestamp.toString()) > 0) {
         setStatus(`File was notarized at block ${blockNumber}`);
       } else {
         setStatus('File has not been notarized yet.');
       }
     }
   }, [hashData]);
+
+  useEffect(() => {
+    if (isNotarized) {
+      setNotarizationSuccess(true);
+      refetchHashData(); // Refetch the hash data to update the status
+    }
+  }, [isNotarized, refetchHashData]);
 
   return (
     <div className="max-w-2xl mx-auto p-4">
@@ -152,6 +160,11 @@ export function Home() {
               Show Info
             </button>
           </div>
+          {notarizationSuccess && (
+            <div className="mt-4 p-4 bg-green-100 rounded">
+              <p className="text-green-700">File successfully notarized on the blockchain!</p>
+            </div>
+          )}
           {status && (
             <div className="mt-4 p-4 bg-gray-100 rounded">
               <p>{status}</p>
