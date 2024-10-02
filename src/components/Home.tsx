@@ -1,8 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useAccount, useWriteContract, useReadContract, useWaitForTransactionReceipt } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract, useWaitForTransactionReceipt, usePublicClient } from 'wagmi';
 import { sha256 } from 'js-sha256';
 import { AccountConnector } from './elements/AccountConnector';
 import { NetworkInfo } from './elements/NetworkInfo';
+import { NotarizationInfo } from './elements/NotarizationInfo';
 import { useContractAddress } from '../hooks/useContractAddress';
 
 // Note: This ABI should be imported from a separate file in a real application
@@ -11,11 +12,14 @@ import NotarizerABI from '../eth/notarizer-abi';
 export function Home() {
   const [file, setFile] = useState<File | null>(null);
   const [fileHash, setFileHash] = useState('');
-  const [status, setStatus] = useState('');
+  const [blockNumber, setBlockNumber] = useState<bigint | undefined>(undefined);
+  const [miningTime, setMiningTime] = useState<string | undefined>(undefined);
+  const [isNotarized, setIsNotarized] = useState(false);
   const [notarizationSuccess, setNotarizationSuccess] = useState(false);
 
   const { isConnected } = useAccount();
   const contractAddress = useContractAddress();
+  const publicClient = usePublicClient();
 
   const { data: hashData, refetch: refetchHashData } = useReadContract({
     address: contractAddress,
@@ -26,7 +30,7 @@ export function Home() {
 
   const { writeContract, data: writeData } = useWriteContract();
 
-  const { isLoading: isNotarizing, isSuccess: isNotarized } = useWaitForTransactionReceipt({
+  const { isLoading: isNotarizing, isSuccess: notarizationCompleted } = useWaitForTransactionReceipt({
     hash: writeData,
   });
 
@@ -56,22 +60,35 @@ export function Home() {
   }, [fileHash, writeContract, contractAddress]);
 
   useEffect(() => {
-    if (hashData) {
-      const [timestamp, blockNumber] = hashData;
-      if (parseInt(timestamp.toString()) > 0) {
-        setStatus(`File was notarized at block ${blockNumber}`);
-      } else {
-        setStatus('File has not been notarized yet.');
+    async function updateNotarizationInfo() {
+      if (hashData) {
+        const [timestamp, blockNumberBigInt] = hashData;
+        if (BigInt(timestamp) > 0n) {
+          setIsNotarized(true);
+          setBlockNumber(BigInt(blockNumberBigInt.toString()));
+          try {
+            const block = await publicClient.getBlock({ blockNumber: BigInt(blockNumberBigInt.toString()) });
+            setMiningTime(new Date(Number(block.timestamp) * 1000).toLocaleString());
+          } catch (error) {
+            console.error('Error fetching block details:', error);
+            setMiningTime(undefined);
+          }
+        } else {
+          setIsNotarized(false);
+          setBlockNumber(undefined);
+          setMiningTime(undefined);
+        }
       }
     }
-  }, [hashData]);
+    updateNotarizationInfo();
+  }, [hashData, publicClient]);
 
   useEffect(() => {
-    if (isNotarized) {
+    if (notarizationCompleted) {
       setNotarizationSuccess(true);
       refetchHashData(); // Refetch the hash data to update the status
     }
-  }, [isNotarized, refetchHashData]);
+  }, [notarizationCompleted, refetchHashData]);
 
   return (
     <div className="max-w-2xl mx-auto p-4">
@@ -115,11 +132,11 @@ export function Home() {
               <p className="text-green-700">File successfully notarized on the blockchain!</p>
             </div>
           )}
-          {status && (
-            <div className="mt-4 p-4 bg-gray-100 rounded">
-              <p>{status}</p>
-            </div>
-          )}
+          <NotarizationInfo
+            blockNumber={blockNumber}
+            miningTime={miningTime}
+            isNotarized={isNotarized}
+          />
         </>
       )}
     </div>

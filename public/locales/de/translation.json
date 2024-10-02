@@ -1,0 +1,10 @@
+{
+  "fileNotarizer": "Datei-Notarisierung",
+  "selectedFile": "Ausgewählte Datei",
+  "fileHash": "Datei-Hash",
+  "notarizing": "Notarisiere...",
+  "notarizeFile": "Datei notarisieren",
+  "notarizationSuccess": "Datei erfolgreich auf der Blockchain notarisiert!",
+  "fileNotNotarized": "Die Datei wurde noch nicht notarisiert.",
+  "fileNotarizedAt": "Die Datei wurde in Block {{blockNumber}} notarisiert, am {{miningTime}} geschürft"
+}

@@ -1,0 +1,10 @@
+{
+  "fileNotarizer": "File Notarizer",
+  "selectedFile": "Selected file",
+  "fileHash": "File hash",
+  "notarizing": "Notarizing...",
+  "notarizeFile": "Notarize File",
+  "notarizationSuccess": "File successfully notarized on the blockchain!",
+  "fileNotNotarized": "File has not been notarized yet.",
+  "fileNotarizedAt": "File was notarized at block {{blockNumber}}, mined on {{miningTime}}"
+}
