@@ -1,25 +1,86 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GlobeAltIcon } from '@heroicons/react/24/outline';
 
+const languages = [
+    { code: 'en', label: 'English', shortLabel: 'EN' },
+    { code: 'de', label: 'Deutsch', shortLabel: 'DE' },
+];
+
+// Custom hook to detect if the screen is in mobile view
+const useIsMobile = () => {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkIsMobile = () => {
+            setIsMobile(window.innerWidth < 640); // Adjust this breakpoint as needed
+        };
+
+        checkIsMobile();
+        window.addEventListener('resize', checkIsMobile);
+
+        return () => window.removeEventListener('resize', checkIsMobile);
+    }, []);
+
+    return isMobile;
+};
+
 export const LanguageSelector: React.FC = () => {
     const { i18n } = useTranslation();
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    const isMobile = useIsMobile();
 
-    const changeLanguage = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        i18n.changeLanguage(event.target.value);
+    const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+
+    const changeLanguage = (langCode: string) => {
+        i18n.changeLanguage(langCode);
+        setIsOpen(false);
     };
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     return (
-        <div className="relative inline-block">
-            <GlobeAltIcon className="h-5 w-5 text-gray-300 absolute left-2 top-1/2 transform -translate-y-1/2" />
-            <select
-                onChange={changeLanguage}
-                value={i18n.language}
-                className="bg-gray-700 text-gray-300 text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white py-1 pl-8 pr-2 appearance-none cursor-pointer hover:bg-gray-600 transition duration-150 ease-in-out"
+        <div className="relative inline-block text-left" ref={dropdownRef}>
+            <button
+                type="button"
+                className="inline-flex justify-center items-center rounded-md border border-gray-600 px-3 py-2 bg-gray-700 text-sm font-medium text-gray-300 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                onClick={() => setIsOpen(!isOpen)}
             >
-                <option value="en">EN</option>
-                <option value="de">DE</option>
-            </select>
+                <GlobeAltIcon className="h-5 w-5 mr-2" />
+                {currentLanguage.shortLabel}
+            </button>
+
+            {isOpen && (
+                <div
+                    className={`origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10
+            ${isMobile ? 'right-0' : 'left-0'}`}
+                >
+                    <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                        {languages.map((language) => (
+                            <button
+                                key={language.code}
+                                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                role="menuitem"
+                                onClick={() => changeLanguage(language.code)}
+                            >
+                                {language.label}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
