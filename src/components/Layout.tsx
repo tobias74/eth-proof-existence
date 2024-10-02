@@ -67,7 +67,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     </div>
                                 </div>
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                                    <div className="hidden sm:block">
+                                    <div className="sm:hidden">
+                                        <LanguageSelector />
+                                    </div>
+                                    <div className="hidden sm:block ml-4">
                                         <AccountConnector />
                                     </div>
                                 </div>
@@ -88,10 +91,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                 ))}
                             </div>
                             <div className="px-2 pt-2 pb-3 border-t border-gray-700">
-                                <div className="flex items-center justify-between">
-                                    <LanguageSelector />
-                                    <AccountConnector />
-                                </div>
+                                <AccountConnector />
                             </div>
                         </DisclosurePanel>
                     </>
