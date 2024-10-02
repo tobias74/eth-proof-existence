@@ -7,7 +7,6 @@ const languages = [
     { code: 'de', label: 'Deutsch', shortLabel: 'DE' },
 ];
 
-// Custom hook to detect if the screen is in mobile view
 const useIsMobile = () => {
     const [isMobile, setIsMobile] = useState(false);
 
@@ -58,8 +57,8 @@ export const LanguageSelector: React.FC = () => {
                 className="inline-flex justify-center items-center rounded-md border border-gray-600 px-3 py-2 bg-gray-700 text-sm font-medium text-gray-300 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <GlobeAltIcon className="h-5 w-5 mr-2" />
-                {currentLanguage.shortLabel}
+                <GlobeAltIcon className="h-5 w-5" />
+                {!isMobile && <span className="ml-2">{currentLanguage.shortLabel}</span>}
             </button>
 
             {isOpen && (
