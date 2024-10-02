@@ -1,5 +1,6 @@
 import { Fragment, ReactNode } from 'react';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { Disclosure } from '@headlessui/react';
+import { DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import { AccountConnector } from './elements/AccountConnector';
@@ -30,18 +31,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                         <div className="w-full px-4">
                             <div className="relative flex items-center justify-between h-16">
                                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                                    <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                                    <DisclosureButton className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                                         <span className="sr-only">Open main menu</span>
                                         {open ? (
                                             <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
                                         ) : (
                                             <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
                                         )}
-                                    </Disclosure.Button>
+                                    </DisclosureButton>
                                 </div>
-                                <div className="flex-1 flex items-center justify-between sm:items-stretch sm:justify-start">
+                                <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                                     <div className="flex-shrink-0 flex items-center">
-                                        <span className="text-white text-lg font-bold">{t('fileNotarizer')}</span>
+                                        <Link to={'/'} className="text-white text-lg font-bold">
+                                            documented.me
+                                        </Link>
                                     </div>
                                     <div className="hidden sm:block sm:ml-6">
                                         <div className="flex space-x-4">
@@ -61,28 +64,36 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     </div>
                                 </div>
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                                    <div className="mr-3">
+                                    <div className="hidden sm:block mr-3">
                                         <LanguageSelector />
                                     </div>
-                                    <AccountConnector />
+                                    <div className="hidden sm:block">
+                                        <AccountConnector />
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <Disclosure.Panel className="sm:hidden">
+                        <DisclosurePanel className="sm:hidden">
                             <div className="px-2 pt-2 pb-3 space-y-1">
                                 {navigation.map((item) => (
-                                    <Disclosure.Button
+                                    <DisclosureButton
                                         key={item.name}
                                         as={Link}
                                         to={item.href}
                                         className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                                     >
                                         {item.name}
-                                    </Disclosure.Button>
+                                    </DisclosureButton>
                                 ))}
                             </div>
-                        </Disclosure.Panel>
+                            <div className="px-2 pt-2 pb-3 border-t border-gray-700">
+                                <div className="flex items-center justify-between">
+                                    <LanguageSelector />
+                                    <AccountConnector />
+                                </div>
+                            </div>
+                        </DisclosurePanel>
                     </>
                 )}
             </Disclosure>

@@ -13,6 +13,10 @@ i18n
         interpolation: {
             escapeValue: false,
         },
+        detection: {
+            order: ['path', 'navigator'],  // Detect language via path or browser
+            caches: [],
+        },
         backend: {
             loadPath: '/locales/{{lng}}/{{ns}}.json',
         },
