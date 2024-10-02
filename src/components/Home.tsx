@@ -8,25 +8,7 @@ import { Account } from '../components/elements/Account';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 // Note: This ABI and contract addresses should be imported from a separate file in a real application
-const NotarizerABI = [
-  {
-    inputs: [{ name: 'hash', type: 'bytes32' }],
-    name: 'notarize',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [{ name: 'hash', type: 'bytes32' }],
-    name: 'getByHash',
-    outputs: [
-      { name: 'timestamp', type: 'uint256' },
-      { name: 'blockNumber', type: 'uint256' },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-];
+import NotarizerABI from '../eth/notarizer-abi';
 
 const contractAddresses: {
   [key: number]: `0x${string}`;
