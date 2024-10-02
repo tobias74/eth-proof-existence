@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useAccount, useWriteContract, useReadContract, useWaitForTransactionReceipt, useChainId } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract, useWaitForTransactionReceipt, useChainId, usePublicClient } from 'wagmi';
 import { sha256 } from 'js-sha256';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { WalletOptions } from '../components/elements/WalletOptions';
-import { Account } from '../components/elements/Account';
+import { AccountConnector } from './elements/AccountConnector';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 // Note: This ABI and contract addresses should be imported from a separate file in a real application
@@ -26,8 +26,9 @@ export function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [notarizationSuccess, setNotarizationSuccess] = useState(false);
 
-  const { isConnected } = useAccount();
+  const { address, isConnected } = useAccount();
   const chainId = useChainId();
+  const publicClient = usePublicClient();
   console.log('we are using chain id', chainId);
 
   const contractAddress: `0x${string}` = contractAddresses[chainId];
@@ -99,10 +100,23 @@ export function Home() {
     <div className="max-w-2xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">File Notarizer</h1>
 
-      {!isConnected ? <ConnectButton /> : <Account />}
+      <AccountConnector />
 
       {isConnected && (
         <>
+          <div className="mb-4 p-4 bg-blue-100 rounded">
+            <h2 className="text-lg font-semibold mb-2">Network Information</h2>
+            <p><strong>Chain ID:</strong> {chainId}</p>
+            <p><strong>Network Name:</strong> {publicClient.chain.name || 'Unknown'}</p>
+            <p><strong>Network Type:</strong> {publicClient.chain.testnet ? 'Testnet' : 'Mainnet'}</p>
+            <p><strong>Your Address:</strong> {address}</p>
+            {contractAddress ? (
+              <p><strong>Contract Address:</strong> {contractAddress}</p>
+            ) : (
+              <p className="text-red-500">No contract deployed on this network</p>
+            )}
+          </div>
+
           <div className="mb-4">
             <input
               type="file"
@@ -124,14 +138,14 @@ export function Home() {
           <div className="space-x-2">
             <button
               onClick={handleNotarize}
-              disabled={!fileHash || isNotarizing}
+              disabled={!fileHash || isNotarizing || !contractAddress}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
             >
               {isNotarizing ? 'Notarizing...' : 'Notarize File'}
             </button>
             <button
               onClick={checkFileStatus}
-              disabled={!fileHash}
+              disabled={!fileHash || !contractAddress}
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
             >
               Check Status
