@@ -1,10 +1,9 @@
-import { http, createConfig } from 'wagmi';
-import { mainnet, sepolia } from 'wagmi/chains';
-import { injected, metaMask, safe } from 'wagmi/connectors';
+import { getDefaultConfig } from '@rainbow-me/rainbowkit';
+import { mainnet, polygon, optimism, arbitrum, base, sepolia } from 'wagmi/chains';
 import { defineChain } from 'viem';
 
 // Define the local Ganache chain
-export const ganacheChain = defineChain({
+const ganacheChain = defineChain({
     id: 1337,
     name: 'Ganache',
     network: 'ganache',
@@ -23,16 +22,8 @@ export const ganacheChain = defineChain({
     testnet: true,
 });
 
-export const config = createConfig({
-    connectors: [
-        injected(),  // Browser extensions like MetaMask, Brave, etc.
-        metaMask(),  // Direct MetaMask connector
-        safe(),      // Safe (formerly Gnosis Safe) for multisig wallets
-    ],
-    chains: [mainnet, sepolia, ganacheChain],
-    transports: {
-        [mainnet.id]: http(),
-        [sepolia.id]: http(),
-        [ganacheChain.id]: http('http://localhost:7545'),
-    },
+export const config = getDefaultConfig({
+    appName: 'Proof Of Existence',
+    projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID,
+    chains: [mainnet, polygon, optimism, arbitrum, base, ganacheChain, sepolia],
 });

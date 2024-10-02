@@ -5,6 +5,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { WalletOptions } from '../components/elements/WalletOptions';
 import { Account } from '../components/elements/Account';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 // Note: This ABI and contract addresses should be imported from a separate file in a real application
 const NotarizerABI = [
@@ -116,7 +117,7 @@ export function Home() {
     <div className="max-w-2xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">File Notarizer</h1>
 
-      {!isConnected ? <WalletOptions /> : <Account />}
+      {!isConnected ? <ConnectButton /> : <Account />}
 
       {isConnected && (
         <>

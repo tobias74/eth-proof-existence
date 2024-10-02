@@ -4,6 +4,9 @@ import { config } from './config';
 import { WagmiProvider } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import '@rainbow-me/rainbowkit/styles.css';
+import { getDefaultConfig, RainbowKitProvider, } from '@rainbow-me/rainbowkit';
+
 const queryClient = new QueryClient();
 
 
@@ -11,15 +14,15 @@ function App() {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
-      {/* Add more routes as needed */}
-    </Routes>
-
-    </QueryClientProvider>
-    </WagmiProvider>    
+        <RainbowKitProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            {/* Add more routes as needed */}
+          </Routes>
+        </RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   )
 }
 
