@@ -41,6 +41,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     </DisclosureButton>
                                 </div>
                                 <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+                                    <div className="hidden sm:flex items-center mr-4">
+                                        <LanguageSelector />
+                                    </div>
                                     <div className="flex-shrink-0 flex items-center">
                                         <Link to={'/'} className="text-white text-lg font-bold">
                                             documented.me
@@ -64,9 +67,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     </div>
                                 </div>
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                                    <div className="hidden sm:block mr-3">
-                                        <LanguageSelector />
-                                    </div>
                                     <div className="hidden sm:block">
                                         <AccountConnector />
                                     </div>
