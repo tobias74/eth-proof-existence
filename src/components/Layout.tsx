@@ -19,8 +19,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     const { t } = useTranslation();
 
     const navigation = [
-        { name: t('home'), href: '/' },
         { name: t('about'), href: '/about' },
+        { name: t('imprint'), href: '/imprint' },
+        { name: t('privacy'), href: '/privacy' },
     ];
 
     return (
@@ -98,7 +99,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 )}
             </Disclosure>
 
-            <main className="flex-grow w-full px-4 lg:px-6 xl:px-8">{children}</main>
+            <main className="flex-grow w-full px-4 lg:px-6 xl:px-8">
+                <div className="max-w-2xl mx-auto p-4">
+                    {children}
+                </div>
+            </main>
 
             <footer className="bg-gray-800 text-gray-300 py-4 mt-auto">
                 <div className="w-full text-center">

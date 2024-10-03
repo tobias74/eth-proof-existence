@@ -8,6 +8,9 @@ import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import Layout from './components/Layout'; // Import the new layout component
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n-config';
+import { About } from './components/About';
+import { Imprint } from './components/Imprint';
+import { Privacy } from './components/Privacy';
 
 const queryClient = new QueryClient();
 
@@ -21,6 +24,8 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/imprint" element={<Imprint />} />
+                <Route path="/privacy" element={<Privacy />} />
                 {/* Add more routes as needed */}
               </Routes>
             </Layout>
@@ -31,9 +36,5 @@ function App() {
   )
 }
 
-
-function About() {
-  return <h1>About Page</h1>;
-}
 
 export default App;
