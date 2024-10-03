@@ -6,7 +6,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { RainbowKitProvider, Locale } from '@rainbow-me/rainbowkit';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n-config';
-import { config } from './config';
+import { config } from './config-alt';
 import Layout from './components/Layout';
 import { Home } from './components/Home';
 import { About } from './components/About';
