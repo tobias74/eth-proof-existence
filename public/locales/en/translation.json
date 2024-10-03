@@ -6,5 +6,8 @@
   "notarizeFile": "Notarize File",
   "notarizationSuccess": "File successfully notarized on the blockchain!",
   "fileNotNotarized": "File has not been notarized yet.",
-  "fileNotarizedAt": "File was notarized at block {{blockNumber}}, mined on {{miningTime}}"
+  "fileNotarizedAt": "File was notarized at block {{blockNumber}}, mined on {{miningTime}}",
+  "about": "About",
+  "imprint": "Imprint",
+  "privacy": "Privacy Policy"
 }
