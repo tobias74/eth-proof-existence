@@ -36,6 +36,7 @@ export function Home() {
 
   const handleFileChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setNotarizationSuccess(false);
+    setFileHash('');
     const selectedFile = event.target.files![0];
     if (selectedFile) {
       setFile(selectedFile);
@@ -132,11 +133,12 @@ export function Home() {
               <p className="text-green-700">File successfully notarized on the blockchain!</p>
             </div>
           )}
-          <NotarizationInfo
+          {fileHash && <NotarizationInfo
             blockNumber={blockNumber}
             miningTime={miningTime}
             isNotarized={isNotarized}
-          />
+          />}
+
         </>
       )}
     </React.Fragment>
