@@ -8,7 +8,7 @@ export const GatewayAccessDenied: React.FC<{
     const { t } = useTranslation();
 
     return (
-        <div className="max-w-2xl mx-auto">
+        <div className="mx-auto">
             <h1 className="text-3xl font-bold mb-6">{t('gatewayAccessDeniedTitle')}</h1>
 
             <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6" role="alert">

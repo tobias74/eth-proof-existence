@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useAccount, useWriteContract, useReadContract, useWaitForTransactionReceipt, usePublicClient } from 'wagmi';
 import { sha256 } from 'js-sha256';
-import { AccountConnector } from './elements/AccountConnector';
 import { NetworkInfo } from './elements/NetworkInfo';
 import { NotarizationInfo } from './elements/NotarizationInfo';
 import { useContractAddress } from '../hooks/useContractAddress';

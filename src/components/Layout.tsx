@@ -11,12 +11,10 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ');
 }
 
-interface LayoutProps {
+const Layout: React.FC<{
     children: ReactNode;
     wagmiEnabled: boolean;
-}
-
-const Layout: React.FC<LayoutProps> = ({ children, wagmiEnabled }) => {
+}> = ({ children, wagmiEnabled }) => {
     const { t } = useTranslation();
 
     const navigation = [
