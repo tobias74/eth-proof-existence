@@ -19,8 +19,7 @@ const queryClient = new QueryClient();
 
 function App() {
   const [rainbowKitLocale, setRainbowKitLocale] = useState<Locale>('en');
-  const [showApp, setShowApp] = useState(false);
-  const [showModal, setShowModal] = useState(true);
+  const [gatewayStatus, setGatewayStatus] = useState<'pending' | 'accepted' | 'declined'>('pending');
 
   useEffect(() => {
     const languageMap: { [key: string]: Locale } = {
@@ -43,46 +42,57 @@ function App() {
   }, []);
 
   const handleAcceptGateway = () => {
-    setShowApp(true);
-    setShowModal(false);
+    setGatewayStatus('accepted');
   };
 
   const handleDeclineGateway = () => {
-    setShowApp(false);
-    setShowModal(false);
+    setGatewayStatus('declined');
   };
 
   const handleReopenModal = () => {
-    setShowModal(true);
+    setGatewayStatus('pending');
+  };
+
+  const renderContent = () => {
+    switch (gatewayStatus) {
+      case 'pending':
+        return (
+          <Layout wagmiEnabled={false}>
+            <EthereumGatewayModal
+              onAccept={handleAcceptGateway}
+              onDecline={handleDeclineGateway}
+            />
+          </Layout>
+        );
+      case 'declined':
+        return (
+          <Layout wagmiEnabled={false}>
+            <GatewayAccessDenied onReopen={handleReopenModal} />
+          </Layout>
+        );
+      case 'accepted':
+        return (
+          <WagmiProvider config={config}>
+            <QueryClientProvider client={queryClient}>
+              <RainbowKitProvider locale={rainbowKitLocale}>
+                <Layout wagmiEnabled={true}>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/imprint" element={<Imprint />} />
+                    <Route path="/privacy" element={<Privacy />} />
+                  </Routes>
+                </Layout>
+              </RainbowKitProvider>
+            </QueryClientProvider>
+          </WagmiProvider>
+        );
+    }
   };
 
   return (
     <I18nextProvider i18n={i18n}>
-      {showModal && (
-        <EthereumGatewayModal
-          onAccept={handleAcceptGateway}
-          onDecline={handleDeclineGateway}
-        />
-      )}
-      {!showModal && !showApp && (
-        <GatewayAccessDenied onReopen={handleReopenModal} />
-      )}
-      {showApp && (
-        <WagmiProvider config={config}>
-          <QueryClientProvider client={queryClient}>
-            <RainbowKitProvider locale={rainbowKitLocale}>
-              <Layout>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/imprint" element={<Imprint />} />
-                  <Route path="/privacy" element={<Privacy />} />
-                </Routes>
-              </Layout>
-            </RainbowKitProvider>
-          </QueryClientProvider>
-        </WagmiProvider>
-      )}
+      {renderContent()}
     </I18nextProvider>
   );
 }

@@ -3,9 +3,9 @@ import { Disclosure } from '@headlessui/react';
 import { DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
-import { AccountConnector } from './elements/AccountConnector';
 import { LanguageSelector } from './elements/LanguageSelector';
 import { useTranslation } from 'react-i18next';
+import { WagmiElements } from './WagmiElements';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ');
@@ -13,9 +13,10 @@ function classNames(...classes: string[]) {
 
 interface LayoutProps {
     children: ReactNode;
+    wagmiEnabled: boolean;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = ({ children, wagmiEnabled }) => {
     const { t } = useTranslation();
 
     const navigation = [
@@ -71,9 +72,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     <div className="lg:hidden">
                                         <LanguageSelector />
                                     </div>
-                                    <div className="hidden lg:block">
-                                        <AccountConnector />
-                                    </div>
+                                    {wagmiEnabled && <WagmiElements />}
                                 </div>
                             </div>
                         </div>
@@ -91,9 +90,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     </DisclosureButton>
                                 ))}
                             </div>
-                            <div className="px-2 pt-2 pb-3 border-t border-gray-700">
-                                <AccountConnector />
-                            </div>
+                            {wagmiEnabled && (
+                                <div className="px-2 pt-2 pb-3 border-t border-gray-700">
+                                    <WagmiElements />
+                                </div>
+                            )}
                         </DisclosurePanel>
                     </>
                 )}
