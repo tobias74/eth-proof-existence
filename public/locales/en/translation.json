@@ -9,5 +9,18 @@
   "fileNotarizedAt": "File was notarized at block {{blockNumber}}, mined on {{miningTime}}",
   "about": "About",
   "imprint": "Imprint",
-  "privacy": "Privacy Policy"
+  "privacy": "Privacy Policy",
+  "ethereumGatewayNotice": "Public Ethereum Gateway Notice",
+  "ethereumGatewayDescription": "This application uses public Ethereum gateways, such as Cloudflare's Ethereum gateway (https://cloudflare-eth.com/).",
+  "privacyImplications": "By accepting, you acknowledge the following privacy implications:",
+  "ipAddressSharing": "Your IP address will be shared with the gateway provider.",
+  "dataProcessing": "Your transaction data may be processed by the gateway provider.",
+  "thirdPartyAccess": "Third parties may have access to your interaction data with the Ethereum network.",
+  "cloudflarePrivacyPolicy": "For more information, please review Cloudflare's privacy policy:",
+  "cloudflarePrivacyPolicyLink": "Cloudflare Privacy Policy",
+  "accept": "Accept",
+  "decline": "Decline",
+  "accessDenied": "Access Denied",
+  "accessDeniedDescription": "You have declined to use the public Ethereum gateway. The application cannot function without this connection.",
+  "reevaluateDecision": "Reconsider Decision"
 }

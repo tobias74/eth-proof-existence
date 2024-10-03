@@ -9,5 +9,18 @@
   "fileNotarizedAt": "Die Datei wurde in Block {{blockNumber}} notarisiert, am {{miningTime}} geschürft",
   "about": "Über uns",
   "imprint": "Impressum",
-  "privacy": "Datenschutz"
+  "privacy": "Datenschutz",
+  "ethereumGatewayNotice": "Hinweis zu öffentlichen Ethereum-Gateways",
+  "ethereumGatewayDescription": "Diese Anwendung verwendet öffentliche Ethereum-Gateways, wie zum Beispiel das Ethereum-Gateway von Cloudflare (https://cloudflare-eth.com/).",
+  "privacyImplications": "Durch die Annahme erkennen Sie folgende Datenschutzauswirkungen an:",
+  "ipAddressSharing": "Ihre IP-Adresse wird mit dem Gateway-Anbieter geteilt.",
+  "dataProcessing": "Ihre Transaktionsdaten können vom Gateway-Anbieter verarbeitet werden.",
+  "thirdPartyAccess": "Dritte können Zugang zu Ihren Interaktionsdaten mit dem Ethereum-Netzwerk haben.",
+  "cloudflarePrivacyPolicy": "Weitere Informationen finden Sie in der Datenschutzerklärung von Cloudflare:",
+  "cloudflarePrivacyPolicyLink": "Cloudflare Datenschutzerklärung",
+  "accept": "Akzeptieren",
+  "decline": "Ablehnen",
+  "accessDenied": "Zugriff verweigert",
+  "accessDeniedDescription": "Sie haben die Nutzung des öffentlichen Ethereum-Gateways abgelehnt. Die Anwendung kann ohne diese Verbindung nicht funktionieren.",
+  "reevaluateDecision": "Entscheidung überdenken"
 }

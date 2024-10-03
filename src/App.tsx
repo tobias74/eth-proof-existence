@@ -12,11 +12,15 @@ import { Home } from './components/Home';
 import { About } from './components/About';
 import { Imprint } from './components/Imprint';
 import { Privacy } from './components/Privacy';
+import { EthereumGatewayModal } from './components/EthereumGatewayModal';
+import { GatewayAccessDenied } from './components/GatewayAccessDenied';
 
 const queryClient = new QueryClient();
 
 function App() {
   const [rainbowKitLocale, setRainbowKitLocale] = useState<Locale>('en');
+  const [showApp, setShowApp] = useState(false);
+  const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
     const languageMap: { [key: string]: Locale } = {
@@ -30,38 +34,55 @@ function App() {
       setRainbowKitLocale(languageMap[i18n.language] || 'en');
     };
 
-    // Set initial locale
     handleLanguageChange();
-
-    // Listen for language changes
     i18n.on('languageChanged', handleLanguageChange);
 
-    // Cleanup
     return () => {
       i18n.off('languageChanged', handleLanguageChange);
     };
   }, []);
 
+  const handleAcceptGateway = () => {
+    setShowApp(true);
+    setShowModal(false);
+  };
 
-  console.log('rendering app component....');
+  const handleDeclineGateway = () => {
+    setShowApp(false);
+    setShowModal(false);
+  };
+
+  const handleReopenModal = () => {
+    setShowModal(true);
+  };
 
   return (
     <I18nextProvider i18n={i18n}>
-      <WagmiProvider config={config}>
-        <QueryClientProvider client={queryClient}>
-          <RainbowKitProvider locale={rainbowKitLocale}>
-            <Layout>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/imprint" element={<Imprint />} />
-                <Route path="/privacy" element={<Privacy />} />
-                {/* Add more routes as needed */}
-              </Routes>
-            </Layout>
-          </RainbowKitProvider>
-        </QueryClientProvider>
-      </WagmiProvider>
+      {showModal && (
+        <EthereumGatewayModal
+          onAccept={handleAcceptGateway}
+          onDecline={handleDeclineGateway}
+        />
+      )}
+      {!showModal && !showApp && (
+        <GatewayAccessDenied onReopen={handleReopenModal} />
+      )}
+      {showApp && (
+        <WagmiProvider config={config}>
+          <QueryClientProvider client={queryClient}>
+            <RainbowKitProvider locale={rainbowKitLocale}>
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/imprint" element={<Imprint />} />
+                  <Route path="/privacy" element={<Privacy />} />
+                </Routes>
+              </Layout>
+            </RainbowKitProvider>
+          </QueryClientProvider>
+        </WagmiProvider>
+      )}
     </I18nextProvider>
   );
 }
