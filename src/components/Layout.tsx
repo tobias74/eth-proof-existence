@@ -72,7 +72,9 @@ const Layout: React.FC<LayoutProps> = ({ children, wagmiEnabled }) => {
                                     <div className="lg:hidden">
                                         <LanguageSelector />
                                     </div>
-                                    {wagmiEnabled && <WagmiElements />}
+                                    <div className="hidden lg:block">
+                                        {wagmiEnabled && <WagmiElements />}
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -1,23 +1,44 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-interface GatewayAccessDeniedProps {
-    onReopen: () => void;
-}
 
-export const GatewayAccessDenied: React.FC<GatewayAccessDeniedProps> = ({ onReopen }) => {
+export const GatewayAccessDenied: React.FC<{
+    onReopen: () => void;
+}> = ({ onReopen }) => {
     const { t } = useTranslation();
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4">
-            <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-6 text-center">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('accessDenied')}</h2>
-                <p className="text-gray-600 mb-6">{t('accessDeniedDescription')}</p>
+        <div className="max-w-2xl mx-auto">
+            <h1 className="text-3xl font-bold mb-6">{t('gatewayAccessDeniedTitle')}</h1>
+
+            <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6" role="alert">
+                <p className="font-bold">{t('limitedAccessWarning')}</p>
+                <p>{t('limitedAccessDescription')}</p>
+            </div>
+
+            <div className="mb-6">
+                <h2 className="text-xl font-semibold mb-3">{t('whyThisHappened')}</h2>
+                <p className="mb-2">{t('gatewayExplanationDenied')}</p>
+                <p>{t('privacyChoiceRespect')}</p>
+            </div>
+
+            <div className="mb-6">
+                <h2 className="text-xl font-semibold mb-3">{t('whatYouCanDo')}</h2>
+                <ul className="list-disc list-inside">
+                    <li>{t('exploreNonBlockchainFeatures')}</li>
+                    <li>{t('learnMoreAboutBlockchain')}</li>
+                    <li>{t('reconsiderDecision')}</li>
+                </ul>
+            </div>
+
+            <div className="mb-6">
+                <h2 className="text-xl font-semibold mb-3">{t('changeYourMind')}</h2>
+                <p className="mb-4">{t('decisionNotFinal')}</p>
                 <button
                     onClick={onReopen}
-                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
                 >
-                    {t('reevaluateDecision')}
+                    {t('reviewDecision')}
                 </button>
             </div>
         </div>

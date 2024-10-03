@@ -14,6 +14,7 @@ import { Imprint } from './components/Imprint';
 import { Privacy } from './components/Privacy';
 import { EthereumGatewayModal } from './components/EthereumGatewayModal';
 import { GatewayAccessDenied } from './components/GatewayAccessDenied';
+import { EthereumGatewayInfo } from './components/EthereumGatewayInfo';
 
 const queryClient = new QueryClient();
 
@@ -67,7 +68,7 @@ function App() {
         return (
           <Layout wagmiEnabled={false}>
             <Routes>
-              <Route path="/" element={<EthereumGatewayModal onAccept={handleAcceptGateway} onDecline={handleDeclineGateway} />} />
+              <Route path="/" element={<EthereumGatewayInfo onAccept={handleAcceptGateway} onDecline={handleDeclineGateway} />} />
               {commonRoutes}
             </Routes>
           </Layout>
