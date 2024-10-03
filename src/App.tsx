@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { WagmiProvider } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '@rainbow-me/rainbowkit/styles.css';
@@ -54,20 +54,31 @@ function App() {
   };
 
   const renderContent = () => {
+    const commonRoutes = (
+      <>
+        <Route path="/about" element={<About />} />
+        <Route path="/imprint" element={<Imprint />} />
+        <Route path="/privacy" element={<Privacy />} />
+      </>
+    );
+
     switch (gatewayStatus) {
       case 'pending':
         return (
           <Layout wagmiEnabled={false}>
-            <EthereumGatewayModal
-              onAccept={handleAcceptGateway}
-              onDecline={handleDeclineGateway}
-            />
+            <Routes>
+              <Route path="/" element={<EthereumGatewayModal onAccept={handleAcceptGateway} onDecline={handleDeclineGateway} />} />
+              {commonRoutes}
+            </Routes>
           </Layout>
         );
       case 'declined':
         return (
           <Layout wagmiEnabled={false}>
-            <GatewayAccessDenied onReopen={handleReopenModal} />
+            <Routes>
+              <Route path="/" element={<GatewayAccessDenied onReopen={handleReopenModal} />} />
+              {commonRoutes}
+            </Routes>
           </Layout>
         );
       case 'accepted':
@@ -78,9 +89,7 @@ function App() {
                 <Layout wagmiEnabled={true}>
                   <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/imprint" element={<Imprint />} />
-                    <Route path="/privacy" element={<Privacy />} />
+                    {commonRoutes}
                   </Routes>
                 </Layout>
               </RainbowKitProvider>
