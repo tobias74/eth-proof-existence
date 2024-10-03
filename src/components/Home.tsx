@@ -35,6 +35,7 @@ export function Home() {
   });
 
   const handleFileChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setNotarizationSuccess(false);
     const selectedFile = event.target.files![0];
     if (selectedFile) {
       setFile(selectedFile);
@@ -48,7 +49,9 @@ export function Home() {
   }, []);
 
   const handleNotarize = useCallback(() => {
+    console.log('Called Handle Notarize');
     if (fileHash && contractAddress) {
+      console.log('Attemting to write to contract');
       writeContract({
         address: contractAddress,
         abi: NotarizerABI,
@@ -119,7 +122,7 @@ export function Home() {
           <div className="space-x-2">
             <button
               onClick={handleNotarize}
-              disabled={!fileHash || isNotarizing || !contractAddress}
+              disabled={!fileHash || isNotarizing || !contractAddress || isNotarized}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
             >
               {isNotarizing ? 'Notarizing...' : 'Notarize File'}
