@@ -1,5 +1,5 @@
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
-import { mainnet, polygon, optimism, arbitrum, base, sepolia } from 'wagmi/chains';
+import { mainnet, sepolia } from 'wagmi/chains';
 import { defineChain } from 'viem';
 
 // Define the local Ganache chain
@@ -25,5 +25,5 @@ const ganacheChain = defineChain({
 export const config = getDefaultConfig({
     appName: 'Proof Of Existence',
     projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID,
-    chains: [mainnet, polygon, optimism, arbitrum, base, ganacheChain, sepolia],
+    chains: [mainnet, ganacheChain, sepolia],
 });
