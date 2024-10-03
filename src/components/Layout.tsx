@@ -107,7 +107,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
             <footer className="bg-gray-800 text-gray-300 py-4 mt-auto">
                 <div className="w-full text-center">
-                    <p>&copy; 2024 Your Company. All rights reserved.</p>
+                    <p>Made by <a target="_blank" href="https://tobiga.com" className="text-gray-300 no-underline hover:text-gray-100 transition duration-150 ease-in-out">tobiga UG (haftungsbeschränkt)</a></p>
                 </div>
             </footer>
         </div>
