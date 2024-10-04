@@ -21,7 +21,11 @@ jobs:
 
       # Step 3: Install root dependencies (so we can run build.js)
       - name: Install Root Dependencies
-        run: npm install
+        run: npm ci
+
+      # Step 4: Rebuild Native Modules (including Rollup)
+      - name: Rebuild Native Modules
+        run: npm rebuild
 
       # Step 4: Run the custom build script
       - name: Run Custom Build Script
