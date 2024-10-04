@@ -12,7 +12,6 @@ import { Home } from './components/Home';
 import { About } from './components/About';
 import { Imprint } from './components/Imprint';
 import { Privacy } from './components/Privacy';
-import { EthereumGatewayModal } from './components/EthereumGatewayModal';
 import { GatewayAccessDenied } from './components/GatewayAccessDenied';
 import { EthereumGatewayInfo } from './components/EthereumGatewayInfo';
 

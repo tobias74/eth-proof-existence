@@ -106,7 +106,7 @@ export function Home() {
           setIsNotarized(true);
           setBlockNumber(BigInt(blockNumberBigInt.toString()));
           try {
-            const block = await publicClient.getBlock({ blockNumber: BigInt(blockNumberBigInt.toString()) });
+            const block = await publicClient!.getBlock({ blockNumber: BigInt(blockNumberBigInt.toString()) });
             setMiningTime(new Date(Number(block.timestamp) * 1000).toLocaleString());
           } catch (error) {
             console.error('Error fetching block details:', error);
@@ -195,7 +195,7 @@ export function Home() {
                       {getBlockExplorerUrl(blockNumber!) && (
                         <> (
                           <a
-                            href={getBlockExplorerUrl(blockNumber!)}
+                            href={getBlockExplorerUrl(blockNumber!) as string}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-600 hover:underline"
