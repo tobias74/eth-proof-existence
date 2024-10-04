@@ -81,13 +81,19 @@
   "notarizing": "Notarizing...",
   "notarizeFile": "Notarize File",
   "notarizationSuccess": "File successfully notarized on the blockchain!",
-  "fileNotNotarized": "File has not been notarized yet.",
   "fileNotarizedAt": "File was notarized at block {{blockNumber}}",
-  "minedOn": "Mined on",
   "viewOnExplorer": "View on block explorer",
   "selectFile": "Select a File",
   "chooseFile": "Choose a file to notarize",
   "success": "Success!",
   "notarizationStatus": "Notarization Status",
-  "notarizedAtBlock": "Notarized at block"
+  "connectedTo": "Connected to {{network}}",
+  "yourAddress": "Your address",
+  "contractAddress": "Contract address",
+  "notarizedAtBlock": "Notarized at block {{block}}",
+  "minedOn": "Mined on {{time}}",
+  "chainId": "Chain ID",
+  "chooseFileToNotarize": "Choose a file to notarize",
+  "fileNotarized": "File notarized",
+  "fileNotNotarized": "File not yet notarized"
 }
