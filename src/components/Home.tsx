@@ -5,8 +5,7 @@ import { useContractAddress } from '../hooks/useContractAddress';
 import { useTranslation } from 'react-i18next';
 import { useBlockExplorerUrl } from '../hooks/useBlockExplorerUrl';
 import NotarizerABI from '../eth/notarizer-abi';
-import { Transition } from '@headlessui/react';
-import { XMarkIcon, ArrowPathIcon, DocumentIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, DocumentIcon } from '@heroicons/react/24/outline';
 import { AbbreviatedHex } from './elements/AbbreviatedHex';
 
 export function Home() {
@@ -16,7 +15,6 @@ export function Home() {
   const [blockNumber, setBlockNumber] = useState<bigint | undefined>(undefined);
   const [miningTime, setMiningTime] = useState<string | undefined>(undefined);
   const [isNotarized, setIsNotarized] = useState(false);
-  const [showToast, setShowToast] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
 
   const { isConnected, address } = useAccount();
@@ -126,7 +124,6 @@ export function Home() {
 
   useEffect(() => {
     if (notarizationCompleted) {
-      setShowToast(true);
       refetchHashData();
     }
   }, [notarizationCompleted, refetchHashData]);
@@ -192,7 +189,7 @@ export function Home() {
                 </p>
                 {isNotarized ? (
                   <div className="mt-2 text-sm text-center">
-                    <p className="text-green-600 font-medium">{t('fileNotarized')}</p>
+                    <p className="text-green-600 font-medium text-xl">{t('fileNotarized', { networkName: getNetworkName() })}</p>
                     <p>
                       {t('notarizedAtBlock', { block: blockNumber?.toString() })}
                       {getBlockExplorerUrl(blockNumber!) && (
@@ -211,7 +208,7 @@ export function Home() {
                     {miningTime && <p>{t('minedOn', { time: miningTime })}</p>}
                   </div>
                 ) : (
-                  <p className="mt-2 text-sm text-yellow-600 text-center">{t('fileNotNotarized')}</p>
+                  <p className="mt-2 text-yellow-600 text-center text-xl">{t('fileNotNotarized')}</p>
                 )}
               </div>
             )}
@@ -228,23 +225,6 @@ export function Home() {
       </div>
     )}
 
-      {/* Toast Notification */}
-      <Transition
-        show={showToast}
-        enter="transition-opacity duration-300"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity duration-300"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      >
-        <div className="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg flex items-center">
-          <span>{t('notarizationSuccess')}</span>
-          <button onClick={() => setShowToast(false)} className="ml-2 focus:outline-none">
-            <XMarkIcon className="h-5 w-5" />
-          </button>
-        </div>
-      </Transition>
     </div>
   );
 }
