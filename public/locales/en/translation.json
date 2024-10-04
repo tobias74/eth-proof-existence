@@ -92,7 +92,7 @@
   "notarizedAtBlock": "Notarized at block {{block}}",
   "minedOn": "Mined on {{time}}",
   "chainId": "Chain ID",
-  "chooseFileToNotarize": "Choose a file to generate a hash",
+  "chooseFileToNotarize": "Select a file to store the hash on the blockchain. The file content is not uploaded, and the SHA256 hash is calculated locally.",
   "fileNotarized": "File hash recorded on {{networkName}}",
   "fileNotNotarized": "File hash not yet recorded",
   "aboutMissionDescription": "This application is currently in an early experimental phase.",

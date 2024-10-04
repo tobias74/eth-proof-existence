@@ -165,7 +165,7 @@ export function Home() {
             {!file ? (
               <label
                 htmlFor="file-upload"
-                className={`flex flex-col justify-center items-center w-full h-32 px-4 transition bg-white border-2 ${isDragging ? 'border-blue-400 bg-blue-50' : 'border-gray-300'
+                className={`flex flex-col justify-center items-center w-full h-40 px-4 transition bg-white border-2 ${isDragging ? 'border-blue-400 bg-blue-50' : 'border-gray-300'
                   } border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none`}
                 onDragEnter={handleDragEnter}
                 onDragLeave={handleDragLeave}

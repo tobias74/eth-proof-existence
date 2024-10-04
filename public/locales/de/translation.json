@@ -91,7 +91,7 @@
   "notarizedAtBlock": "In Block {{block}} gespeichert",
   "minedOn": "Bestätigt am {{time}}",
   "chainId": "Ketten-ID",
-  "chooseFileToNotarize": "Wählen Sie eine Datei, um einen Hash zu generieren",
+  "chooseFileToNotarize": "Wählen Sie eine Datei aus, um den Hash-Wert auf der Blockchain zu speichern. Der Dateiinhalt wird nicht hochgeladen, der SHA256-Hash wird lokal berechnet.",
   "fileNotarized": "Datei-Hash auf {{networkName}} gespeichert",
   "fileNotNotarized": "Datei-Hash noch nicht gespeichert",
   "aboutMission": "Experimentelle App",
