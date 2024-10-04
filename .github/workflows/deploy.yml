@@ -21,7 +21,7 @@ jobs:
 
       # Step 3: Install root dependencies (so we can run build.js)
       - name: Install Root Dependencies
-        run: npm install
+        run: npm install --optional
 
       # Step 4: Run the custom build script
       - name: Run Custom Build Script
