@@ -88,7 +88,7 @@
   "connectedTo": "Verbunden mit {{network}}",
   "yourAddress": "Ihre Adresse",
   "contractAddress": "Vertragsadresse",
-  "notarizedAtBlock": "Im Block {{block}} gespeichert",
+  "notarizedAtBlock": "In Block {{block}} gespeichert",
   "minedOn": "Bestätigt am {{time}}",
   "chainId": "Ketten-ID",
   "chooseFileToNotarize": "Wählen Sie eine Datei, um einen Hash zu generieren",
