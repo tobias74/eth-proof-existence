@@ -17,15 +17,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "20" # Adjust to match your project's Node.js version
+          node-version: "22" # Adjust to match your project's Node.js version
 
       # Step 3: Install root dependencies (so we can run build.js)
       - name: Install Root Dependencies
-        run: npm ci
-
-      # Step 4: Rebuild Native Modules (including Rollup)
-      - name: Rebuild Native Modules
-        run: npm rebuild
+        run: npm install
 
       # Step 4: Run the custom build script
       - name: Run Custom Build Script
