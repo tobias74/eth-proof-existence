@@ -27,7 +27,6 @@ export default defineConfig({
       process: 'process/browser',
       stream: 'stream-browserify',
       http: 'stream-http',
-      crypto: 'crypto-browserify',
     },
   },
   build: {
