@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useBlockExplorerUrl } from '../hooks/useBlockExplorerUrl';
 import NotarizerABI from '../eth/notarizer-abi';
 import { Transition } from '@headlessui/react';
-import { XMarkIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, ArrowPathIcon, DocumentIcon } from '@heroicons/react/24/outline';
 import { AbbreviatedHex } from './elements/AbbreviatedHex';
 
 export function Home() {
@@ -17,6 +17,7 @@ export function Home() {
   const [miningTime, setMiningTime] = useState<string | undefined>(undefined);
   const [isNotarized, setIsNotarized] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   const { isConnected, address } = useAccount();
   const chainId = useChainId();
@@ -37,6 +38,16 @@ export function Home() {
     hash: writeData,
   });
 
+  const handleFileSelection = useCallback((selectedFile: File) => {
+    setFile(selectedFile);
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const hash = sha256(e.target?.result as ArrayBuffer);
+      setFileHash(hash);
+    };
+    reader.readAsArrayBuffer(selectedFile);
+  }, []);
+
   const handleFileChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
@@ -49,6 +60,34 @@ export function Home() {
       reader.readAsArrayBuffer(selectedFile);
     }
   }, []);
+
+  const handleDragEnter = useCallback((e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  }, []);
+
+  const handleDragOver = useCallback((e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
+
+  const handleDrop = useCallback((e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    const droppedFile = e.dataTransfer.files[0];
+    if (droppedFile) {
+      handleFileSelection(droppedFile);
+    }
+  }, [handleFileSelection]);
+
 
   const handleNotarize = useCallback(() => {
     if (fileHash && contractAddress) {
@@ -127,74 +166,67 @@ export function Home() {
             </div>
 
             <div className="mb-6">
-              <label htmlFor="file-upload" className="block text-sm font-medium text-gray-700 mb-2">
-                {t('chooseFileToNotarize')}
-              </label>
-              <div className="flex items-center space-x-4">
-                <input
-                  id="file-upload"
-                  name="file-upload"
-                  type="file"
-                  className="sr-only"
-                  onChange={handleFileChange}
-                />
+              {!file ? (
                 <label
                   htmlFor="file-upload"
-                  className="cursor-pointer py-2 px-3 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+                  className={`flex justify-center items-center w-full h-32 px-4 transition bg-white border-2 ${isDragging ? 'border-blue-400 bg-blue-50' : 'border-gray-300'
+                    } border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none`}
+                  onDragEnter={handleDragEnter}
+                  onDragLeave={handleDragLeave}
+                  onDragOver={handleDragOver}
+                  onDrop={handleDrop}
                 >
-                  {file ? t('changeFile') : t('selectFile')}
-                </label>
-                {file && (
-                  <span className="text-sm text-gray-600">
-                    {file.name} <AbbreviatedHex value={fileHash} />
+                  <span className="flex items-center space-x-2">
+                    <DocumentIcon className="w-6 h-6 text-gray-600" />
+                    <span className="font-medium text-gray-600">
+                      {isDragging ? t('dropFileHere') : t('chooseFileToNotarize')}
+                    </span>
                   </span>
-                )}
-              </div>
+                  <input id="file-upload" name="file-upload" type="file" className="hidden" onChange={handleFileChange} />
+                </label>
+              ) : (
+                <div className="relative p-4 bg-gray-50 rounded-md">
+                  <button onClick={resetState} className="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+                    <XMarkIcon className="w-5 h-5" />
+                  </button>
+                  <p className="font-medium">{file.name}</p>
+                  <p className="text-sm text-gray-500 mt-1">
+                    <AbbreviatedHex value={fileHash} label={t('fileHash')} />
+                  </p>
+                  {isNotarized ? (
+                    <div className="mt-2 text-sm">
+                      <p className="text-green-600 font-medium">{t('fileNotarized')}</p>
+                      <p>
+                        {t('notarizedAtBlock', { block: blockNumber?.toString() })}
+                        {getBlockExplorerUrl(blockNumber!) && (
+                          <> (
+                            <a
+                              href={getBlockExplorerUrl(blockNumber!)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-600 hover:underline"
+                            >
+                              {t('viewOnExplorer')}
+                            </a>
+                            )</>
+                        )}
+                      </p>
+                      {miningTime && <p>{t('minedOn', { time: miningTime })}</p>}
+                    </div>
+                  ) : (
+                    <p className="mt-2 text-sm text-yellow-600">{t('fileNotNotarized')}</p>
+                  )}
+                </div>
+              )}
             </div>
 
-            {file && (
-              <div className="mb-6">
-                {isNotarized ? (
-                  <div className="text-sm">
-                    <p className="text-green-600 font-medium mb-1">{t('fileNotarized')}</p>
-                    <p>
-                      {t('notarizedAtBlock', { block: blockNumber?.toString() })}
-                      {getBlockExplorerUrl(blockNumber!) && (
-                        <> (
-                          <a
-                            href={getBlockExplorerUrl(blockNumber!)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-600 hover:underline"
-                          >
-                            {t('viewOnExplorer')}
-                          </a>
-                          )</>
-                      )}
-                    </p>
-                    {miningTime && <p>{t('minedOn', { time: miningTime })}</p>}
-                  </div>
-                ) : (
-                  <p className="text-sm text-yellow-600">{t('fileNotNotarized')}</p>
-                )}
-              </div>
-            )}
-
-            <div className="flex space-x-4">
-              <button
-                onClick={handleNotarize}
-                disabled={!fileHash || isNotarizing || !contractAddress || isNotarized}
-                className="flex-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 transition duration-300"
-              >
-                {isNotarizing ? t('notarizing') : t('notarizeFile')}
-              </button>
-              <button
-                onClick={resetState}
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded transition duration-300"
-              >
-                <ArrowPathIcon className="h-5 w-5" />
-              </button>
-            </div>
+            <button
+              onClick={handleNotarize}
+              disabled={!fileHash || isNotarizing || !contractAddress || isNotarized}
+              className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded disabled:opacity-50 transition duration-300"
+            >
+              {isNotarizing ? t('notarizing') : t('notarizeFile')}
+            </button>
           </div>
         </div>
       )}
