@@ -18,16 +18,16 @@ export const NotarizationInfo: React.FC<NotarizationInfoProps> = ({
 
     if (!isNotarized) {
         return (
-            <div className="mt-4 p-4 bg-gray-100 rounded">
+            <div className="text-yellow-700">
                 <p>{t('fileNotNotarized')}</p>
             </div>
         );
     }
 
     return (
-        <div className="mt-4 p-4 bg-gray-100 rounded">
+        <div className="space-y-2">
             <p>
-                {t('fileNotarizedAt', { blockNumber: blockNumber?.toString() })}
+                <span className="font-medium">{t('notarizedAtBlock')}:</span> {blockNumber?.toString()}
                 {blockExplorerUrl && (
                     <> (
                         <a
@@ -41,7 +41,11 @@ export const NotarizationInfo: React.FC<NotarizationInfoProps> = ({
                         )</>
                 )}
             </p>
-            {miningTime && <p>{t('minedOn', { miningTime })}</p>}
+            {miningTime && (
+                <p>
+                    <span className="font-medium">{t('minedOn')}:</span> {miningTime}
+                </p>
+            )}
         </div>
     );
 };

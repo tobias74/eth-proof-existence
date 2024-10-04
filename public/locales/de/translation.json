@@ -83,6 +83,6 @@
   "notarizationSuccess": "Datei erfolgreich auf der Blockchain notarisiert!",
   "fileNotNotarized": "Die Datei wurde noch nicht notarisiert.",
   "fileNotarizedAt": "Die Datei wurde in Block {{blockNumber}} notarisiert",
-  "minedOn": "Geschürft am {{miningTime}}",
+  "minedOn": "Geschürft am",
   "viewOnExplorer": "Im Block-Explorer anzeigen"
 }
