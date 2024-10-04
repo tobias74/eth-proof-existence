@@ -29,7 +29,6 @@ export const config = createConfig({
     chains: [/*mainnet,*/ ganacheChain, sepolia],
     connectors: [
         injected(),
-        walletConnect({ projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID }),
     ],
     transports: {
         //[mainnet.id]: http(),
