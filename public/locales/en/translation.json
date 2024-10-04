@@ -1,12 +1,4 @@
 {
-  "fileNotarizer": "File Notarizer",
-  "selectedFile": "Selected file",
-  "fileHash": "File hash",
-  "notarizing": "Notarizing...",
-  "notarizeFile": "Notarize File",
-  "notarizationSuccess": "File successfully notarized on the blockchain!",
-  "fileNotNotarized": "File has not been notarized yet.",
-  "fileNotarizedAt": "File was notarized at block {{blockNumber}}, mined on {{miningTime}}",
   "about": "About",
   "imprint": "Imprint",
   "privacy": "Privacy Policy",
@@ -82,5 +74,15 @@
   "privacySecurityTitle": "Privacy and Security",
   "privacySecurityDescription": "At documented.me, we prioritize the privacy and security of your documents. We never store the actual content of your files - only the cryptographic hash is recorded on the blockchain.",
   "getStartedPrompt": "Ready to start notarizing your documents? Visit our",
-  "homePage": "home page"
+  "homePage": "home page",
+  "fileNotarizer": "File Notarizer",
+  "selectedFile": "Selected file",
+  "fileHash": "File hash",
+  "notarizing": "Notarizing...",
+  "notarizeFile": "Notarize File",
+  "notarizationSuccess": "File successfully notarized on the blockchain!",
+  "fileNotNotarized": "File has not been notarized yet.",
+  "fileNotarizedAt": "File was notarized at block {{blockNumber}}",
+  "minedOn": "Mined on {{miningTime}}",
+  "viewOnExplorer": "View on block explorer"
 }

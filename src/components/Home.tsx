@@ -1,14 +1,16 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useAccount, useWriteContract, useReadContract, useWaitForTransactionReceipt, usePublicClient } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract, useWaitForTransactionReceipt, usePublicClient, useChainId } from 'wagmi';
 import { sha256 } from 'js-sha256';
 import { NetworkInfo } from './elements/NetworkInfo';
 import { NotarizationInfo } from './elements/NotarizationInfo';
 import { useContractAddress } from '../hooks/useContractAddress';
-
-// Note: This ABI should be imported from a separate file in a real application
+import { useTranslation } from 'react-i18next';
 import NotarizerABI from '../eth/notarizer-abi';
+import { useBlockExplorerUrl } from '../hooks/useBlockExplorerUrl';
+
 
 export function Home() {
+  const { t } = useTranslation();
   const [file, setFile] = useState<File | null>(null);
   const [fileHash, setFileHash] = useState('');
   const [blockNumber, setBlockNumber] = useState<bigint | undefined>(undefined);
@@ -19,6 +21,8 @@ export function Home() {
   const { isConnected } = useAccount();
   const contractAddress = useContractAddress();
   const publicClient = usePublicClient();
+
+  const getBlockExplorerUrl = useBlockExplorerUrl();
 
   const { data: hashData, refetch: refetchHashData } = useReadContract({
     address: contractAddress,
@@ -36,12 +40,15 @@ export function Home() {
   const handleFileChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setNotarizationSuccess(false);
     setFileHash('');
-    const selectedFile = event.target.files![0];
+    setIsNotarized(false);
+    setBlockNumber(undefined);
+    setMiningTime(undefined);
+    const selectedFile = event.target.files?.[0];
     if (selectedFile) {
       setFile(selectedFile);
       const reader = new FileReader();
       reader.onload = (e) => {
-        const hash = sha256(e.target!.result!);
+        const hash = sha256(e.target?.result as ArrayBuffer);
         setFileHash(hash);
       };
       reader.readAsArrayBuffer(selectedFile);
@@ -49,16 +56,14 @@ export function Home() {
   }, []);
 
   const handleNotarize = useCallback(() => {
-    console.log('Called Handle Notarize');
     if (fileHash && contractAddress) {
-      console.log('Attemting to write to contract');
       writeContract({
         address: contractAddress,
         abi: NotarizerABI,
         functionName: 'notarize',
         args: [`0x${fileHash}`],
       });
-      setNotarizationSuccess(false); // Reset success state when starting a new notarization
+      setNotarizationSuccess(false);
     }
   }, [fileHash, writeContract, contractAddress]);
 
@@ -89,13 +94,13 @@ export function Home() {
   useEffect(() => {
     if (notarizationCompleted) {
       setNotarizationSuccess(true);
-      refetchHashData(); // Refetch the hash data to update the status
+      refetchHashData();
     }
   }, [notarizationCompleted, refetchHashData]);
 
   return (
     <React.Fragment>
-      <h1 className="text-2xl font-bold mb-4">File Notarizer</h1>
+      <h1 className="text-2xl font-bold mb-4">{t('fileNotarizer')}</h1>
       {isConnected && (
         <>
           <NetworkInfo />
@@ -114,8 +119,8 @@ export function Home() {
           </div>
           {file && (
             <div className="mb-4">
-              <p className="text-sm text-gray-600">Selected file: {file.name}</p>
-              <p className="text-sm text-gray-600">File hash: {fileHash}</p>
+              <p className="text-sm text-gray-600">{t('selectedFile')}: {file.name}</p>
+              <p className="text-sm text-gray-600">{t('fileHash')}: {fileHash}</p>
             </div>
           )}
           <div className="space-x-2">
@@ -124,20 +129,22 @@ export function Home() {
               disabled={!fileHash || isNotarizing || !contractAddress || isNotarized}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
             >
-              {isNotarizing ? 'Notarizing...' : 'Notarize File'}
+              {isNotarizing ? t('notarizing') : t('notarizeFile')}
             </button>
           </div>
           {notarizationSuccess && (
             <div className="mt-4 p-4 bg-green-100 rounded">
-              <p className="text-green-700">File successfully notarized on the blockchain!</p>
+              <p className="text-green-700">{t('notarizationSuccess')}</p>
             </div>
           )}
-          {fileHash && <NotarizationInfo
-            blockNumber={blockNumber}
-            miningTime={miningTime}
-            isNotarized={isNotarized}
-          />}
-
+          {fileHash && (
+            <NotarizationInfo
+              blockNumber={blockNumber}
+              miningTime={miningTime}
+              isNotarized={isNotarized}
+              blockExplorerUrl={blockNumber ? getBlockExplorerUrl(blockNumber) : null}
+            />
+          )}
         </>
       )}
     </React.Fragment>
