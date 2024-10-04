@@ -25,5 +25,5 @@ const ganacheChain = defineChain({
 export const config = getDefaultConfig({
     appName: 'Proof Of Existence',
     projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID,
-    chains: [mainnet, ganacheChain, sepolia],
+    chains: [/*mainnet,*/ ganacheChain, sepolia],
 });
