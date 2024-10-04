@@ -15,12 +15,6 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      // Polyfill for `buffer` and other Node.js core modules
-      buffer: 'buffer',
-      util: 'util',
-      process: 'process/browser',
-      stream: 'stream-browserify',
-      http: 'stream-http',
     },
   },
   build: {
