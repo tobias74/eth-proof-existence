@@ -7,17 +7,14 @@ import NotarizerABI from '../eth/notarizer-abi';
 import { XMarkIcon, DocumentIcon } from '@heroicons/react/24/outline';
 import { AbbreviatedHex } from './elements/AbbreviatedHex';
 import { useFileDrop } from '../hooks/useFileDrop';
+import { useNetworkName } from '../hooks/useNetworkName';
+import { useNotarizationInfo } from '../hooks/useNotarizationInfo';
 
 export function Home() {
   const { t } = useTranslation();
-  const [blockNumber, setBlockNumber] = useState<bigint | undefined>(undefined);
-  const [miningTime, setMiningTime] = useState<string | undefined>(undefined);
-  const [isNotarized, setIsNotarized] = useState(false);
 
   const { isConnected, address } = useAccount();
-  const chainId = useChainId();
   const contractAddress = useContractAddress();
-  const publicClient = usePublicClient();
   const getBlockExplorerUrl = useBlockExplorerUrl();
 
   const {
@@ -32,12 +29,6 @@ export function Home() {
     resetFile,
   } = useFileDrop();
 
-  const { data: hashData, refetch: refetchHashData } = useReadContract({
-    address: contractAddress,
-    abi: NotarizerABI,
-    functionName: 'getByHash',
-    args: fileHash ? [`0x${fileHash}`] : undefined,
-  });
 
   const { writeContract, data: writeData } = useWriteContract();
 
@@ -58,29 +49,7 @@ export function Home() {
     }
   }, [fileHash, writeContract, contractAddress]);
 
-  useEffect(() => {
-    async function updateNotarizationInfo() {
-      if (hashData) {
-        const [timestamp, blockNumberBigInt] = hashData;
-        if (BigInt(timestamp) > 0n) {
-          setIsNotarized(true);
-          setBlockNumber(BigInt(blockNumberBigInt.toString()));
-          try {
-            const block = await publicClient!.getBlock({ blockNumber: BigInt(blockNumberBigInt.toString()) });
-            setMiningTime(new Date(Number(block.timestamp) * 1000).toLocaleString());
-          } catch (error) {
-            console.error('Error fetching block details:', error);
-            setMiningTime(undefined);
-          }
-        } else {
-          setIsNotarized(false);
-          setBlockNumber(undefined);
-          setMiningTime(undefined);
-        }
-      }
-    }
-    updateNotarizationInfo();
-  }, [hashData, publicClient]);
+  const { isNotarized, blockNumber, miningTime, refetchHashData } = useNotarizationInfo(fileHash);
 
   useEffect(() => {
     if (notarizationCompleted) {
@@ -90,26 +59,16 @@ export function Home() {
 
   const resetState = () => {
     resetFile();
-    setBlockNumber(undefined);
-    setMiningTime(undefined);
-    setIsNotarized(false);
   };
 
-  const getNetworkName = () => {
-    switch (chainId) {
-      case 1: return 'Ethereum Mainnet';
-      case 11155111: return 'Sepolia Testnet';
-      case 1337: return 'Ganache Testnet';
-      default: return 'Unknown Network';
-    }
-  };
+  const { name: networkName, chainId } = useNetworkName();
 
   return (
     <div className="max-w-3xl mx-auto p-4">        {isConnected && (
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
         <div className="p-6 text-center">
           <div className="flex flex-col items-center mb-4">
-            <h1 className="text-2xl font-bold">{getNetworkName()}</h1>
+            <h1 className="text-2xl font-bold">{networkName}</h1>
             <span className="text-sm text-gray-500">(Chain ID: {chainId})</span>
           </div>
 
@@ -148,7 +107,7 @@ export function Home() {
                 </p>
                 {isNotarized ? (
                   <div className="mt-2 text-sm text-center">
-                    <p className="text-green-600 font-medium text-xl">{t('fileNotarized', { networkName: getNetworkName() })}</p>
+                    <p className="text-green-600 font-medium text-xl">{t('fileNotarized', { networkName: networkName })}</p>
                     <p>
                       {t('notarizedAtBlock', { block: blockNumber?.toString() })}
                       {getBlockExplorerUrl(blockNumber!) && (
