@@ -6,7 +6,8 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { RainbowKitProvider, Locale } from '@rainbow-me/rainbowkit';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n-config';
-import { config } from './config-alt';
+import { config as configOnlyInjected } from './config-alt';
+import { config as configWithWalletConnect } from './config';
 import Layout from './components/Layout';
 import { Home } from './components/Home';
 import { About } from './components/About';
@@ -14,12 +15,14 @@ import { Imprint } from './components/Imprint';
 import { Privacy } from './components/Privacy';
 import { GatewayAccessDenied } from './components/GatewayAccessDenied';
 import { EthereumGatewayInfo } from './components/EthereumGatewayInfo';
+import { AppStateProvider } from './AppState';
 
 const queryClient = new QueryClient();
 
 function App() {
   const [rainbowKitLocale, setRainbowKitLocale] = useState<Locale>('en');
   const [gatewayStatus, setGatewayStatus] = useState<'pending' | 'accepted' | 'declined'>('pending');
+  const [walletConnectEnabled, setWalletConnectEnabled] = useState(false);
 
   useEffect(() => {
     const languageMap: { [key: string]: Locale } = {
@@ -83,7 +86,7 @@ function App() {
         );
       case 'accepted':
         return (
-          <WagmiProvider config={config}>
+          <WagmiProvider config={walletConnectEnabled ? configWithWalletConnect : configOnlyInjected}>
             <QueryClientProvider client={queryClient}>
               <RainbowKitProvider locale={rainbowKitLocale}>
                 <Layout wagmiEnabled={true}>
@@ -101,7 +104,9 @@ function App() {
 
   return (
     <I18nextProvider i18n={i18n}>
-      {renderContent()}
+      <AppStateProvider>
+        {renderContent()}
+      </AppStateProvider>
     </I18nextProvider>
   );
 }

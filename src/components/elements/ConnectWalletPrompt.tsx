@@ -1,9 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { AccountConnector } from './AccountConnector'; // Assuming this is the correct import path
+import { useAppState } from '../../AppState';
 
 export const ConnectWalletPrompt: React.FC = () => {
     const { t } = useTranslation();
+    const { walletConnectEnabled, setWalletConnectEnabled } = useAppState();
 
     return (
         <div className="flex flex-col items-center bg-gray-100 p-4">
