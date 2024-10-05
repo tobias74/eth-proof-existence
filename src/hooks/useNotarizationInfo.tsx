@@ -4,6 +4,7 @@ import NotarizerABI from '../eth/notarizer-abi';
 import { useContractAddress } from './useContractAddress';
 
 interface NotarizationInfo {
+    isPending: boolean;
     isNotarized: boolean;
     blockNumber: bigint | undefined;
     miningTime: string | undefined;
@@ -19,7 +20,7 @@ export function useNotarizationInfo(fileHash: any): NotarizationInfo {
 
     const contractAddress = useContractAddress();
 
-    const { data: hashData, refetch: refetchHashData } = useReadContract({
+    const { data: hashData, refetch: refetchHashData, isPending } = useReadContract({
         address: contractAddress,
         abi: NotarizerABI,
         functionName: 'getByHash',
@@ -60,5 +61,5 @@ export function useNotarizationInfo(fileHash: any): NotarizationInfo {
         updateNotarizationInfo();
     }, [hashData, publicClient]);
 
-    return { isNotarized, blockNumber, miningTime, refetchHashData };
+    return { isPending, isNotarized, blockNumber, miningTime, refetchHashData };
 }

@@ -5,6 +5,7 @@ import { AbbreviatedHex } from './AbbreviatedHex';
 import { NotarizedFileInfo } from './NotarizedFileInfo';
 
 interface FileInfoDisplayProps {
+    isLoading: boolean;
     file: File;
     fileHash: string;
     isNotarized: boolean;

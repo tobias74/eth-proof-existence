@@ -11,13 +11,13 @@ import { useNetworkName } from '../hooks/useNetworkName';
 import { useNotarizationInfo } from '../hooks/useNotarizationInfo';
 import { NotarizedFileInfo } from './elements/NotarizedFileInfo';
 import { FileInfoDisplay } from './elements/FileInfoDisplay';
+import { FileUploadArea } from './elements/FileUploadArea';
 
 export function Home() {
   const { t } = useTranslation();
 
   const { isConnected, address } = useAccount();
   const contractAddress = useContractAddress();
-  const getBlockExplorerUrl = useBlockExplorerUrl();
 
   const {
     file,
@@ -51,7 +51,7 @@ export function Home() {
     }
   }, [fileHash, writeContract, contractAddress]);
 
-  const { isNotarized, blockNumber, miningTime, refetchHashData } = useNotarizationInfo(fileHash);
+  const { isPending: isLoadingDataFromBlockChain, isNotarized, blockNumber, miningTime, refetchHashData } = useNotarizationInfo(fileHash);
 
   useEffect(() => {
     if (notarizationCompleted) {
@@ -79,23 +79,15 @@ export function Home() {
           </div>
 
           <div className="mb-6">
-            {!file ? (
-              <label
-                htmlFor="file-upload"
-                className={`flex flex-col justify-center items-center w-full h-40 px-4 transition bg-white border-2 ${isDragging ? 'border-blue-400 bg-blue-50' : 'border-gray-300'
-                  } border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none`}
+            {!file ?
+              <FileUploadArea
+                isDragging={isDragging}
                 onDragEnter={handleDragEnter}
                 onDragLeave={handleDragLeave}
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
-              >
-                <DocumentIcon className="w-10 h-10 text-gray-600 mb-2" />
-                <span className="font-medium text-gray-600">
-                  {isDragging ? t('dropFileHere') : t('chooseFileToNotarize')}
-                </span>
-                <input id="file-upload" name="file-upload" type="file" className="hidden" onChange={handleFileChange} />
-              </label>
-            )
+                onFileChange={handleFileChange}
+              />
               :
               <FileInfoDisplay
                 file={file}
@@ -104,6 +96,7 @@ export function Home() {
                 networkName={networkName}
                 blockNumber={blockNumber}
                 miningTime={miningTime}
+                isLoading={isLoadingDataFromBlockChain}
                 onReset={resetFile}
               />
             }
