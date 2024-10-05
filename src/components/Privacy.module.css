@@ -2,9 +2,6 @@
 :local(.container) {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f9f9f9;
-    padding: 20px;
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
@@ -13,7 +10,6 @@
   :local(.container) h3 {
     font-weight: bold;
     font-size: 1.5rem; /* Reduced size */
-    color: #2c3e50;
     margin-bottom: 10px; /* Adjusted margin */
     border-bottom: none; /* Removed border for a cleaner look */
   }

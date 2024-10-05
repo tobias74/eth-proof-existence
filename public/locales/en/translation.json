@@ -97,5 +97,8 @@
   "fileNotNotarized": "File hash not yet recorded",
   "aboutMissionDescription": "This application is currently in an early experimental phase.",
   "aboutExperimentalDescription": "This application stores the hash of your file on the blockchain. This approach documents the integrity and timestamp of your documents without revealing the actual content.",
-  "aboutTechnicalDetails": "The file hash is calculated locally in your browser, ensuring that the original file never leaves your device. Currently, we support select Ethereum test networks to test blockchain notarization under controlled conditions."
+  "aboutTechnicalDetails": "The file hash is calculated locally in your browser, ensuring that the original file never leaves your device. Currently, we support select Ethereum test networks to test blockchain notarization under controlled conditions.",
+  "connectWalletTitle": "Connect Your Wallet",
+  "connectWalletDescription": "To use this application, you need to connect your Ethereum wallet. Click the button below to get started.",
+  "connectWalletHelp": "Need help? Learn more about connecting your wallet."
 }

@@ -97,5 +97,8 @@
   "aboutMission": "Experimentelle App",
   "aboutMissionDescription": "Diese Anwendung befindet sich aktuell noch in einer frühen Experimentierphase.",
   "aboutExperimentalDescription": "Diese Anwendung speichert den Hash Ihrer Datei auf der Blockchain. Durch diesen Ansatz wird die Integrität und der Zeitstempel Ihrer Dokumente dokumentiert, ohne den tatsächlichen Inhalt preiszugeben.",
-  "aboutTechnicalDetails": "Der Datei-Hash wird lokal in Ihrem Browser berechnet, sodass die Originaldatei Ihr Gerät nicht verlässt. Derzeit unterstützen wir ausgewählte Ethereum-Testnetzwerke, um die Blockchain-Notarisierung unter kontrollierten Bedingungen zu testen."
+  "aboutTechnicalDetails": "Der Datei-Hash wird lokal in Ihrem Browser berechnet, sodass die Originaldatei Ihr Gerät nicht verlässt. Derzeit unterstützen wir ausgewählte Ethereum-Testnetzwerke, um die Blockchain-Notarisierung unter kontrollierten Bedingungen zu testen.",
+  "connectWalletTitle": "Verbinden Sie Ihre Wallet",
+  "connectWalletDescription": "Um diese Anwendung zu nutzen, müssen Sie Ihre Ethereum-Wallet verbinden. Klicken Sie auf den Button unten, um zu beginnen.",
+  "connectWalletHelp": "Benötigen Sie Hilfe? Erfahren Sie mehr über das Verbinden Ihrer Wallet."
 }
