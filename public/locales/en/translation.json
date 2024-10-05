@@ -100,5 +100,9 @@
   "aboutTechnicalDetails": "The file hash is calculated locally in your browser, ensuring that the original file never leaves your device. Currently, we support select Ethereum test networks to test blockchain notarization under controlled conditions.",
   "connectWalletTitle": "Connect Your Wallet",
   "connectWalletDescription": "To use this application, you need to connect your Ethereum wallet. Click the button below to get started.",
-  "connectWalletHelp": "Need help? Learn more about connecting your wallet."
+  "connectWalletHelp": "Need help? Learn more about connecting your wallet.",
+  "connectWallet": "Connect Wallet",
+  "enableWalletConnectCloud": "Enable WalletConnect Cloud",
+  "walletConnectPrivacyInfo": "By enabling WalletConnect Cloud, you agree to share certain data. Your IP address will be visible to Reown. Please review our privacy policy for more details.",
+  "reownPrivacyPolicyLink": "Reown Privacy Policy"
 }

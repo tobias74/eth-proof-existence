@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { AccountConnector } from './AccountConnector'; // Assuming this is the correct import path
+import { Switch } from '@headlessui/react';
+import { AccountConnector } from './AccountConnector';
 import { useAppState } from '../../AppState';
 
 export const ConnectWalletPrompt: React.FC = () => {
@@ -17,9 +18,35 @@ export const ConnectWalletPrompt: React.FC = () => {
                 <div className="mb-6">
                     <AccountConnector />
                 </div>
-                <p className="text-sm text-gray-500">
-                    {/*t('connectWalletHelp')*/}
+                <div className="flex items-center justify-between mb-4">
+                    <span className="text-sm font-medium">{t('enableWalletConnectCloud')}</span>
+                    <Switch
+                        checked={walletConnectEnabled}
+                        onChange={setWalletConnectEnabled}
+                        className={`${walletConnectEnabled ? 'bg-blue-600' : 'bg-gray-300'
+                            } relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+                    >
+                        <span className="sr-only">{t('enableWalletConnectCloud')}</span>
+                        <span
+                            className={`${walletConnectEnabled ? 'translate-x-2' : '-translate-x-2'
+                                } inline-block w-4 h-4 transform bg-white rounded-full transition-transform`}
+                        />
+                    </Switch>
+                </div>
+                <p className="text-sm text-gray-500 mb-4">
+                    {t('walletConnectPrivacyInfo')}
                 </p>
+                <p className="text-sm text-gray-500 mb-4">
+                    {t('ipAddressVisibility')}
+                </p>
+                <a
+                    href="https://reown.com/privacy-policy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:underline"
+                >
+                    {t('reownPrivacyPolicyLink')}
+                </a>
             </div>
         </div>
     );
