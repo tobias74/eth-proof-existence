@@ -10,6 +10,7 @@ import { useFileDrop } from '../hooks/useFileDrop';
 import { useNetworkName } from '../hooks/useNetworkName';
 import { useNotarizationInfo } from '../hooks/useNotarizationInfo';
 import { NotarizedFileInfo } from './elements/NotarizedFileInfo';
+import { FileInfoDisplay } from './elements/FileInfoDisplay';
 
 export function Home() {
   const { t } = useTranslation();
@@ -58,10 +59,6 @@ export function Home() {
     }
   }, [notarizationCompleted, refetchHashData]);
 
-  const resetState = () => {
-    resetFile();
-  };
-
   const { name: networkName, chainId } = useNetworkName();
 
   return (
@@ -98,26 +95,18 @@ export function Home() {
                 </span>
                 <input id="file-upload" name="file-upload" type="file" className="hidden" onChange={handleFileChange} />
               </label>
-            ) : (
-              <div className="relative p-4 bg-gray-50 rounded-md text-left">
-                <button onClick={resetState} className="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
-                  <XMarkIcon className="w-5 h-5" />
-                </button>
-                <p className="font-medium text-center">{file.name}</p>
-                <p className="text-sm text-gray-500 mt-1 text-center">
-                  <AbbreviatedHex value={fileHash} label={t('fileHash')} />
-                </p>
-                {isNotarized ?
-                  <NotarizedFileInfo
-                    networkName={networkName}
-                    blockNumber={blockNumber}
-                    miningTime={miningTime}
-                  />
-                  : (
-                    <p className="mt-2 text-yellow-600 text-center text-xl">{t('fileNotNotarized')}</p>
-                  )}
-              </div>
-            )}
+            )
+              :
+              <FileInfoDisplay
+                file={file}
+                fileHash={fileHash}
+                isNotarized={isNotarized}
+                networkName={networkName}
+                blockNumber={blockNumber}
+                miningTime={miningTime}
+                onReset={resetFile}
+              />
+            }
           </div>
 
           <button
