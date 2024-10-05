@@ -9,6 +9,7 @@ import { AbbreviatedHex } from './elements/AbbreviatedHex';
 import { useFileDrop } from '../hooks/useFileDrop';
 import { useNetworkName } from '../hooks/useNetworkName';
 import { useNotarizationInfo } from '../hooks/useNotarizationInfo';
+import { NotarizedFileInfo } from './elements/NotarizedFileInfo';
 
 export function Home() {
   const { t } = useTranslation();
@@ -67,6 +68,7 @@ export function Home() {
     <div className="max-w-3xl mx-auto p-4">        {isConnected && (
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
         <div className="p-6 text-center">
+
           <div className="flex flex-col items-center mb-4">
             <h1 className="text-2xl font-bold">{networkName}</h1>
             <span className="text-sm text-gray-500">(Chain ID: {chainId})</span>
@@ -105,29 +107,15 @@ export function Home() {
                 <p className="text-sm text-gray-500 mt-1 text-center">
                   <AbbreviatedHex value={fileHash} label={t('fileHash')} />
                 </p>
-                {isNotarized ? (
-                  <div className="mt-2 text-sm text-center">
-                    <p className="text-green-600 font-medium text-xl">{t('fileNotarized', { networkName: networkName })}</p>
-                    <p>
-                      {t('notarizedAtBlock', { block: blockNumber?.toString() })}
-                      {getBlockExplorerUrl(blockNumber!) && (
-                        <> (
-                          <a
-                            href={getBlockExplorerUrl(blockNumber!) as string}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-600 hover:underline"
-                          >
-                            {t('viewOnExplorer')}
-                          </a>
-                          )</>
-                      )}
-                    </p>
-                    {miningTime && <p>{t('minedOn', { time: miningTime })}</p>}
-                  </div>
-                ) : (
-                  <p className="mt-2 text-yellow-600 text-center text-xl">{t('fileNotNotarized')}</p>
-                )}
+                {isNotarized ?
+                  <NotarizedFileInfo
+                    networkName={networkName}
+                    blockNumber={blockNumber}
+                    miningTime={miningTime}
+                  />
+                  : (
+                    <p className="mt-2 text-yellow-600 text-center text-xl">{t('fileNotNotarized')}</p>
+                  )}
               </div>
             )}
           </div>
