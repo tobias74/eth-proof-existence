@@ -1,27 +1,36 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useAccount, useWriteContract, useReadContract, useWaitForTransactionReceipt, usePublicClient, useChainId } from 'wagmi';
-import { sha256 } from 'js-sha256';
 import { useContractAddress } from '../hooks/useContractAddress';
 import { useTranslation } from 'react-i18next';
 import { useBlockExplorerUrl } from '../hooks/useBlockExplorerUrl';
 import NotarizerABI from '../eth/notarizer-abi';
 import { XMarkIcon, DocumentIcon } from '@heroicons/react/24/outline';
 import { AbbreviatedHex } from './elements/AbbreviatedHex';
+import { useFileDrop } from '../hooks/useFileDrop';
 
 export function Home() {
   const { t } = useTranslation();
-  const [file, setFile] = useState<File | null>(null);
-  const [fileHash, setFileHash] = useState('');
   const [blockNumber, setBlockNumber] = useState<bigint | undefined>(undefined);
   const [miningTime, setMiningTime] = useState<string | undefined>(undefined);
   const [isNotarized, setIsNotarized] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
 
   const { isConnected, address } = useAccount();
   const chainId = useChainId();
   const contractAddress = useContractAddress();
   const publicClient = usePublicClient();
   const getBlockExplorerUrl = useBlockExplorerUrl();
+
+  const {
+    file,
+    fileHash,
+    isDragging,
+    handleDragEnter,
+    handleDragLeave,
+    handleDragOver,
+    handleDrop,
+    handleFileChange,
+    resetFile,
+  } = useFileDrop();
 
   const { data: hashData, refetch: refetchHashData } = useReadContract({
     address: contractAddress,
@@ -36,55 +45,6 @@ export function Home() {
     hash: writeData,
   });
 
-  const handleFileSelection = useCallback((selectedFile: File) => {
-    setFile(selectedFile);
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const hash = sha256(e.target?.result as ArrayBuffer);
-      setFileHash(hash);
-    };
-    reader.readAsArrayBuffer(selectedFile);
-  }, []);
-
-  const handleFileChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const hash = sha256(e.target?.result as ArrayBuffer);
-        setFileHash(hash);
-      };
-      reader.readAsArrayBuffer(selectedFile);
-    }
-  }, []);
-
-  const handleDragEnter = useCallback((e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(true);
-  }, []);
-
-  const handleDragLeave = useCallback((e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-  }, []);
-
-  const handleDragOver = useCallback((e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-  }, []);
-
-  const handleDrop = useCallback((e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-    const droppedFile = e.dataTransfer.files[0];
-    if (droppedFile) {
-      handleFileSelection(droppedFile);
-    }
-  }, [handleFileSelection]);
 
 
   const handleNotarize = useCallback(() => {
@@ -129,8 +89,7 @@ export function Home() {
   }, [notarizationCompleted, refetchHashData]);
 
   const resetState = () => {
-    setFile(null);
-    setFileHash('');
+    resetFile();
     setBlockNumber(undefined);
     setMiningTime(undefined);
     setIsNotarized(false);
