@@ -13,12 +13,15 @@ export const NotarizedFileInfo: React.FC<NotarizedFileInfoProps> = ({ networkNam
     const getBlockExplorerUrl = useBlockExplorerUrl();
 
     return (
-        <div className="mt-2 text-sm text-center">
-            <p className="text-green-600 font-medium text-xl">{t('fileNotarized', { networkName })}</p>
-            <p>
+        <div className="mt-3 sm:mt-4 text-center">
+            <p className="text-green-600 font-medium text-lg sm:text-xl mb-2 sm:mb-3">
+                {t('fileNotarized', { networkName })}
+            </p>
+            <p className="text-sm sm:text-base mb-1 sm:mb-2">
                 {t('notarizedAtBlock', { block: blockNumber?.toString() })}
                 {getBlockExplorerUrl(blockNumber!) && (
-                    <> (
+                    <span className="block sm:inline mt-1 sm:mt-0">
+                        {' '}(
                         <a
                             href={getBlockExplorerUrl(blockNumber!) as string}
                             target="_blank"
@@ -27,10 +30,15 @@ export const NotarizedFileInfo: React.FC<NotarizedFileInfoProps> = ({ networkNam
                         >
                             {t('viewOnExplorer')}
                         </a>
-                        )</>
+                        )
+                    </span>
                 )}
             </p>
-            {miningTime && <p>{t('minedOn', { time: miningTime })}</p>}
+            {miningTime && (
+                <p className="text-xs sm:text-sm text-gray-600">
+                    {t('minedOn', { time: miningTime })}
+                </p>
+            )}
         </div>
     );
 };
