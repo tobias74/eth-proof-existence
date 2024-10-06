@@ -8,9 +8,9 @@ export function Imprint() {
 
     return (
         <>
-            <h1 className="text-3xl font-bold mb-6 text-gray-800">{t('imprint')}</h1>
+            <h1 className="text-2xl font-bold mb-6 text-gray-800">{t('imprint')}</h1>
 
-            <div className="bg-white rounded-lg overflow-hidden">
+            <div className="bg-white rounded-lg overflow-hidden p-2 ">
                 <h2 className="text-xl font-semibold mb-4 text-gray-700">tobiga UG (haftungsbeschränkt)</h2>
 
                 <div className="space-y-2 text-gray-600">

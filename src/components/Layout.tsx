@@ -100,7 +100,7 @@ const Layout: React.FC<{
                 )}
             </Disclosure>
 
-            <main className="flex-grow w-full px-4 lg:px-6 xl:px-8">
+            <main className="flex-grow w-full px-4 lg:px-6 xl:px-8 bg-gray-100">
                 <div className="max-w-2xl mx-auto p-4">
                     {children}
                 </div>

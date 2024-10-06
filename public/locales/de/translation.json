@@ -97,5 +97,12 @@
   "aboutMission": "Experimentelle App",
   "aboutMissionDescription": "Diese Anwendung befindet sich aktuell noch in einer frühen Experimentierphase.",
   "aboutExperimentalDescription": "Diese Anwendung speichert den Hash Ihrer Datei auf der Blockchain. Durch diesen Ansatz wird die Integrität und der Zeitstempel Ihrer Dokumente dokumentiert, ohne den tatsächlichen Inhalt preiszugeben.",
-  "aboutTechnicalDetails": "Der Datei-Hash wird lokal in Ihrem Browser berechnet, sodass die Originaldatei Ihr Gerät nicht verlässt. Derzeit unterstützen wir ausgewählte Ethereum-Testnetzwerke, um die Blockchain-Notarisierung unter kontrollierten Bedingungen zu testen."
+  "aboutTechnicalDetails": "Der Datei-Hash wird lokal in Ihrem Browser berechnet, sodass die Originaldatei Ihr Gerät nicht verlässt. Derzeit unterstützen wir ausgewählte Ethereum-Testnetzwerke, um die Blockchain-Notarisierung unter kontrollierten Bedingungen zu testen.",
+  "connectWalletHelp": "Benötigen Sie Hilfe? Erfahren Sie mehr über das Verbinden Ihrer Wallet.",
+  "connectWalletTitle": "Verbinden Sie Ihr Wallet",
+  "connectWalletDescription": "Verbinden Sie Ihr Wallet, um unsere Dienste zu nutzen. Sie können Wallet-Anbieter wie MetaMask verwenden, ohne zusätzliche Cloud-Dienste zu aktivieren.",
+  "enableWalletConnectCloud": "Reown Cloud Services aktivieren (optional)",
+  "walletConnectPrivacyInfo": "Reown Cloud Services (ehemals WalletConnect) ist eine optionale Funktion, die es Ihnen ermöglicht, verschiedene Wallet-Typen zu verbinden, besonders nützlich für mobile Geräte. Durch die Aktivierung stimmen Sie zu, bestimmte Informationen, wie Ihre Wallet-Adresse und Transaktionsdaten, mit Reown zu teilen. Dies kann datenschutzrechtliche Auswirkungen haben, einschließlich der möglichen Weitergabe von Daten an Drittanbieter, die an der Wallet-Verbindung beteiligt sind, entsprechend den geltenden Datenschutzgesetzen. Sie können unsere Dienste weiterhin mit eingebetteten Wallet-Anbietern nutzen, ohne diese Funktion zu aktivieren.",
+  "ipAddressVisibility": "Bitte beachten Sie: Wenn Sie Reown Cloud Services aktivieren, wird Ihre IP-Adresse für Reown (ehemals WalletConnect Inc.) sichtbar.",
+  "reownPrivacyPolicyLink": "Datenschutzrichtlinie von Reown"
 }
