@@ -13,6 +13,16 @@ export function PrivacyEN() {
             <a target="_blank" href="https://www.ionos.de/terms-gtc/datenschutzerklaerung/">https://www.ionos.de/terms-gtc/datenschutzerklaerung/</a> (german)
         </p>
 
+        <h5>Privacy Information on the Use of Reown Cloud Services</h5>
+
+        <p>On our website, we use Reown Cloud Services (formerly WalletConnect) to provide functionalities related to the management of crypto wallets. Reown offers a secure, cloud-based service that enables wallet connections over the internet.</p>
+
+        <p>
+            Reown privacy policy: <a target="_blank" href="https://reown.com/privacy-policy">https://reown.com/privacy-policy</a>
+        </p>
+
+        <h5>Additional Privacy Information</h5>
+
 
         <p>We are very delighted that you have shown interest in our enterprise. Data protection is of a particularly high priority for the management of the tobiga UG (haftungsbeschränkt). The use of the Internet pages of the tobiga UG (haftungsbeschränkt) is possible without any indication of personal data; however, if a data subject wants to use special enterprise services via our website, processing of personal data could become necessary. If the processing of personal data is necessary and there is no statutory basis for such processing, we generally obtain consent from the data subject.</p>
 

@@ -22,6 +22,14 @@
     margin-bottom: 10px; /* Adjusted margin */
   }
   
+  /* Heading 5 styles */
+  :local(.container) h5 {
+    font-weight: bold;
+    font-size: 1.125rem; /* Slightly smaller than h4 */
+    margin-top: 12px; /* Reduced margin from h4 */
+    margin-bottom: 8px; /* Adjusted margin */
+  }
+
   /* Paragraph styles */
   :local(.container) p {
     font-size: 1rem;

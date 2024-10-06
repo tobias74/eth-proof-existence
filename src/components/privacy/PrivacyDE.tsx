@@ -9,6 +9,16 @@ export function PrivacyDE() {
             Datenschutzerklärung von IONOS: <a target="_blank" href="https://www.ionos.de/terms-gtc/datenschutzerklaerung/">https://www.ionos.de/terms-gtc/datenschutzerklaerung/</a>
         </p>
 
+        <h5>Datenschutzinformation zur Nutzung von Reown Cloud Services</h5>
+
+        <p>Auf unserer Webseite nutzen wir Reown Cloud Services (vormals WalletConnect) zur Bereitstellung von Funktionalitäten im Zusammenhang mit der Verwaltung von Krypto-Wallets. Reown bietet einen sicheren, cloudbasierten Dienst, der es ermöglicht, Wallet-Verbindungen über das Internet herzustellen.</p>
+
+        <p>
+            Datenschutzerklärung von reown: <a target="_blank" href="https://reown.com/privacy-policy">https://reown.com/privacy-policy</a>
+        </p>
+
+        <h5>Weitere Datenschutzinformationen</h5>
+
         <p>Wir freuen uns sehr über Ihr Interesse an unserem Unternehmen. Datenschutz hat einen besonders hohen Stellenwert für die Geschäftsleitung der tobiga UG (haftungsbeschränkt). Eine Nutzung der Internetseiten der tobiga UG (haftungsbeschränkt) ist grundsätzlich ohne jede Angabe personenbezogener Daten möglich. Sofern eine betroffene Person besondere Services unseres Unternehmens über unsere Internetseite in Anspruch nehmen möchte, könnte jedoch eine Verarbeitung personenbezogener Daten erforderlich werden. Ist die Verarbeitung personenbezogener Daten erforderlich und besteht für eine solche Verarbeitung keine gesetzliche Grundlage, holen wir generell eine Einwilligung der betroffenen Person ein.</p>
 
         <p>Die Verarbeitung personenbezogener Daten, beispielsweise des Namens, der Anschrift, E-Mail-Adresse oder Telefonnummer einer betroffenen Person, erfolgt stets im Einklang mit der Datenschutz-Grundverordnung und in Übereinstimmung mit den für die tobiga UG (haftungsbeschränkt) geltenden landesspezifischen Datenschutzbestimmungen. Mittels dieser Datenschutzerklärung möchte unser Unternehmen die Öffentlichkeit über Art, Umfang und Zweck der von uns erhobenen, genutzten und verarbeiteten personenbezogenen Daten informieren. Ferner werden betroffene Personen mittels dieser Datenschutzerklärung über die ihnen zustehenden Rechte aufgeklärt.</p>
