@@ -3,7 +3,7 @@ name: Deploy to Server via SFTP
 on:
   push:
     branches:
-      - master # Adjust this as necessary
+      - master
 
 jobs:
   deploy:
@@ -17,24 +17,29 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "22" # Adjust to match your project's Node.js version
+          node-version: "22"
 
-      # Step 3: Install root dependencies (so we can run build.js)
-      - name: Install Root Dependencies
-        run: npm install --optional
+      # Step 3: Install dependencies
+      - name: Install Dependencies
+        run: npm install
 
-      # Step 4: Run the custom build script
+      # Step 4: Inject environment variables from GitHub secrets
+      - name: Inject Env Variables
+        run: |
+          echo "VITE_WALLETCONNECT_PROJECT_ID=${{ secrets.VITE_WALLETCONNECT_PROJECT_ID }}" >> $GITHUB_ENV
+
+      # Step 5: Run the custom build script
       - name: Run Custom Build Script
         run: npm run build
 
-      # Step 5: Deploy via SFTP
+      # Step 6: Deploy via SFTP
       - name: Deploy via SFTP
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
           username: ${{ secrets.SFTP_USERNAME }}
           server: access978123064.webspace-data.io
           port: 22
-          local_path: dist/* # Deploy only the React app's build output
+          local_path: dist/*
           remote_path: /
           sftp_only: true
-          password: ${{ secrets.SFTP_PASSWORD }} # Use secrets for authentication
+          password: ${{ secrets.SFTP_PASSWORD }}
