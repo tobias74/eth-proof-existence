@@ -1,35 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { WagmiProvider } from 'wagmi';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '@rainbow-me/rainbowkit/styles.css';
 import { RainbowKitProvider, Locale } from '@rainbow-me/rainbowkit';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n-config';
+import MainContent from './MainContent'; // Import the new component
+import { AppStateProvider } from './AppState';
+import { QueryClient } from '@tanstack/react-query';
 import { config as configOnlyInjected } from './config-alt';
 import { config as configWithWalletConnect } from './config';
-import Layout from './components/Layout';
-import { Home } from './components/Home';
-import { About } from './components/About';
-import { Imprint } from './components/Imprint';
-import { Privacy } from './components/Privacy';
-import { GatewayAccessDenied } from './components/GatewayAccessDenied';
-import { EthereumGatewayInfo } from './components/EthereumGatewayInfo';
-import { AppStateProvider } from './AppState';
 
 const queryClient = new QueryClient();
 
 function App() {
   const [rainbowKitLocale, setRainbowKitLocale] = useState<Locale>('en');
   const [gatewayStatus, setGatewayStatus] = useState<'pending' | 'accepted' | 'declined'>('pending');
-  const [walletConnectEnabled, setWalletConnectEnabled] = useState(false);
 
   useEffect(() => {
     const languageMap: { [key: string]: Locale } = {
       en: 'en',
-      de: 'en', // rainbowkit does not support german yet, so we use english as a fallback
+      de: 'en', // rainbowkit does not support German yet, so we use English as a fallback
       fr: 'fr',
-      // Add more mappings as needed
     };
 
     const handleLanguageChange = () => {
@@ -44,68 +34,23 @@ function App() {
     };
   }, []);
 
-  const handleAcceptGateway = () => {
-    setGatewayStatus('accepted');
-  };
-
-  const handleDeclineGateway = () => {
-    setGatewayStatus('declined');
-  };
-
-  const handleReopenModal = () => {
-    setGatewayStatus('pending');
-  };
-
-  const renderContent = () => {
-    const commonRoutes = (
-      <>
-        <Route path="/about" element={<About />} />
-        <Route path="/imprint" element={<Imprint />} />
-        <Route path="/privacy" element={<Privacy />} />
-      </>
-    );
-
-    switch (gatewayStatus) {
-      case 'pending':
-        return (
-          <Layout wagmiEnabled={false}>
-            <Routes>
-              <Route path="/" element={<EthereumGatewayInfo onAccept={handleAcceptGateway} onDecline={handleDeclineGateway} />} />
-              {commonRoutes}
-            </Routes>
-          </Layout>
-        );
-      case 'declined':
-        return (
-          <Layout wagmiEnabled={false}>
-            <Routes>
-              <Route path="/" element={<GatewayAccessDenied onReopen={handleReopenModal} />} />
-              {commonRoutes}
-            </Routes>
-          </Layout>
-        );
-      case 'accepted':
-        return (
-          <WagmiProvider config={walletConnectEnabled ? configWithWalletConnect : configOnlyInjected}>
-            <QueryClientProvider client={queryClient}>
-              <RainbowKitProvider locale={rainbowKitLocale}>
-                <Layout wagmiEnabled={true}>
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    {commonRoutes}
-                  </Routes>
-                </Layout>
-              </RainbowKitProvider>
-            </QueryClientProvider>
-          </WagmiProvider>
-        );
-    }
-  };
+  const handleAcceptGateway = () => setGatewayStatus('accepted');
+  const handleDeclineGateway = () => setGatewayStatus('declined');
+  const handleReopenModal = () => setGatewayStatus('pending');
 
   return (
     <I18nextProvider i18n={i18n}>
       <AppStateProvider>
-        {renderContent()}
+        <MainContent
+          gatewayStatus={gatewayStatus}
+          handleAcceptGateway={handleAcceptGateway}
+          handleDeclineGateway={handleDeclineGateway}
+          handleReopenModal={handleReopenModal}
+          rainbowKitLocale={rainbowKitLocale}
+          queryClient={queryClient}
+          configWithWalletConnect={configWithWalletConnect}
+          configOnlyInjected={configOnlyInjected}
+        />
       </AppStateProvider>
     </I18nextProvider>
   );

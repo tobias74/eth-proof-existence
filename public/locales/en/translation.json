@@ -98,11 +98,12 @@
   "aboutMissionDescription": "This application is currently in an early experimental phase.",
   "aboutExperimentalDescription": "This application stores the hash of your file on the blockchain. This approach documents the integrity and timestamp of your documents without revealing the actual content.",
   "aboutTechnicalDetails": "The file hash is calculated locally in your browser, ensuring that the original file never leaves your device. Currently, we support select Ethereum test networks to test blockchain notarization under controlled conditions.",
-  "connectWalletTitle": "Connect Your Wallet",
-  "connectWalletDescription": "To use this application, you need to connect your Ethereum wallet. Click the button below to get started.",
   "connectWalletHelp": "Need help? Learn more about connecting your wallet.",
   "connectWallet": "Connect Wallet",
-  "enableWalletConnectCloud": "Enable WalletConnect Cloud",
-  "walletConnectPrivacyInfo": "By enabling WalletConnect Cloud, you agree to share certain data. Your IP address will be visible to Reown. Please review our privacy policy for more details.",
+  "connectWalletTitle": "Connect Your Wallet",
+  "connectWalletDescription": "Connect your wallet to access our services. You can use injected wallet providers without enabling additional cloud services.",
+  "enableWalletConnectCloud": "Enable Reown Cloud Services (Optional)",
+  "walletConnectPrivacyInfo": "Reown Cloud Services (previously WalletConnect) is an optional feature that enables you to connect various wallet types, particularly useful for mobile devices. By enabling it, you agree to share certain information, such as your wallet address and transaction data, with Reown. This may have privacy implications, including the potential sharing of data with third-party services involved in wallet connections, as governed by applicable data protection laws. You can still use our services with injected wallet providers without enabling this feature.",
+  "ipAddressVisibility": "Please note: If you enable Reown Cloud Services, your IP address will be visible to Reown (previously WalletConnect Inc.).",
   "reownPrivacyPolicyLink": "Reown Privacy Policy"
 }

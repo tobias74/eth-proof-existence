@@ -9,7 +9,7 @@ export const ConnectWalletPrompt: React.FC = () => {
     const { walletConnectEnabled, setWalletConnectEnabled } = useAppState();
 
     return (
-        <div className="flex flex-col items-center bg-gray-100 p-4">
+        <div className="flex flex-col items-center bg-gray-100 py-4">
             <div className="bg-white shadow-md rounded-lg p-8 max-w-md w-full text-center">
                 <h2 className="text-2xl font-bold mb-4">{t('connectWalletTitle')}</h2>
                 <p className="text-gray-600 mb-6">
@@ -18,7 +18,8 @@ export const ConnectWalletPrompt: React.FC = () => {
                 <div className="mb-6">
                     <AccountConnector />
                 </div>
-                <div className="flex items-center justify-between mb-4">
+                {/* Added mt-8 for more vertical space */}
+                <div className="mt-12 flex items-center justify-between mb-4">
                     <span className="text-sm font-medium">{t('enableWalletConnectCloud')}</span>
                     <Switch
                         checked={walletConnectEnabled}
